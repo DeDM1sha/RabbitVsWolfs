@@ -27,12 +27,12 @@ class GameProcess {
 
     public:
 
-        unsigned short int TextColor; // цвет текста
-        int RabbitsCount; // максимальное кол-во зайцев на карте
-        int WolfsCount; // максимальное кол-во волков
-        unsigned short int Rows_Count; // кол-во строк в матрице поля
-        unsigned short int Columns_Count; // кол-во столбцов в матрице поля
-        int StartAnimalCount; // стартовое число животных (для обоих видов)
+        unsigned short int TextColor; // С†РІРµС‚ С‚РµРєСЃС‚Р°
+        int RabbitsCount; // РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»-РІРѕ Р·Р°Р№С†РµРІ РЅР° РєР°СЂС‚Рµ
+        int WolfsCount; // РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»-РІРѕ РІРѕР»РєРѕРІ
+        unsigned short int Rows_Count; // РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ РјР°С‚СЂРёС†Рµ РїРѕР»СЏ
+        unsigned short int Columns_Count; // РєРѕР»-РІРѕ СЃС‚РѕР»Р±С†РѕРІ РІ РјР°С‚СЂРёС†Рµ РїРѕР»СЏ
+        int StartAnimalCount; // СЃС‚Р°СЂС‚РѕРІРѕРµ С‡РёСЃР»Рѕ Р¶РёРІРѕС‚РЅС‹С… (РґР»СЏ РѕР±РѕРёС… РІРёРґРѕРІ)
 
         GameProcess (void) {
 
@@ -51,7 +51,7 @@ class GameProcess {
 
             SetConsoleTextAttribute(hConsole, (WORD)((0 << 4) | this->TextColor));
 
-        } // метод, меняющий цвет текста
+        } // РјРµС‚РѕРґ, РјРµРЅСЏСЋС‰РёР№ С†РІРµС‚ С‚РµРєСЃС‚Р°
 
         void Center (string Stroke) {
 
@@ -63,7 +63,7 @@ class GameProcess {
 
             cout << Stroke;
 
-        } // Функция для размещения введенного нами текста по центру экрана
+        } // Р¤СѓРЅРєС†РёСЏ РґР»СЏ СЂР°Р·РјРµС‰РµРЅРёСЏ РІРІРµРґРµРЅРЅРѕРіРѕ РЅР°РјРё С‚РµРєСЃС‚Р° РїРѕ С†РµРЅС‚СЂСѓ СЌРєСЂР°РЅР°
 
         void Preview (void) {
 
@@ -81,7 +81,7 @@ class GameProcess {
             Center("CMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n");
             Center(".#bQEQQZISAZbUoAoQ261UbbIo2AEUo22Qb$bB0WEbUoI9QQ0Q86U0IUnznSz1onzooI2EU61ISUbQQE0AIoSznItUCI1AbQQQWE0Uo21A2WbB0QE8UoIAbAo22EUA169EUo2AEA2z2E9AnAI0bB\n\n\n\n");
 
-        } // метод отрисовки шапки
+        } // РјРµС‚РѕРґ РѕС‚СЂРёСЃРѕРІРєРё С€Р°РїРєРё
 
         void DrawBlock (unsigned short int TypeBlock) {
 
@@ -90,27 +90,27 @@ class GameProcess {
 
                 switch (TypeBlock) {
 
-                    case 100:   Str1 = "     "; Str2 = "\0"; Number1 = Black;       Number2 = Black;        break;  // пустая клетка                  - Void_Block
-                    case 101:   Str1 = "** **"; Str2 = "\0"; Number1 = LightGreen;  Number2 = Black;        break;  // клетка с травой (без животных) - Grass_Block
-                    case 102:   Str1 = "&& ";   Str2 = "**"; Number1 = BrightWhite; Number2 = LightGreen;   break;  // заяц в клетке с травой         - Rabbit_Grass
-                    case 103:   Str1 = "&&   "; Str2 = "\0"; Number1 = BrightWhite; Number2 = Black;        break;  // заяц в пустой клетке           - Rabbit_Block
-                    case 104:   Str1 = "&& ";   Str2 = "**"; Number1 = LightYellow; Number2 = LightGreen;   break;  // зайчиха в клетке с травой      - Hare_Grass
-                    case 105:   Str1 = "&& ";   Str2 = "**"; Number1 = LightYellow; Number2 = Black;        break;  // зайчиха в пустой клетке        - Hare_Block
-                    case 106:   Str1 = "&& ";   Str2 = "&&"; Number1 = BrightWhite; Number2 = LightYellow;  break;  // заяц в клетке с зайчихой       - Rabbit_Hare
-                    case 107:   Str1 = "&& &&"; Str2 = "\0"; Number1 = BrightWhite; Number2 = Black;        break;  // зайцы в одной клетке           - Rabbit_Rabbit
-                    case 108:   Str1 = "&& &&"; Str2 = "\0"; Number1 = LightYellow; Number2 = Black;        break;  // зайчихи в одной клетке         - Hare_Hare
-                    case 109:   Str1 = "@@ ";   Str2 = "**"; Number1 = LightRed;    Number2 = LightGreen;   break;  // волк в клетке с травой         - Wolf_Grass
-                    case 110:   Str1 = "@@ ";   Str2 = "  "; Number1 = LightRed;    Number2 = Black;        break;  // волк в пустой клетке           - Wolf_Block
-                    case 111:   Str1 = "@@ ";   Str2 = "**"; Number1 = LightPurple; Number2 = LightGreen;   break;  // волчиха в клетке с травой      - BitchWolf_Grass
-                    case 112:   Str1 = "@@ ";   Str2 = "  "; Number1 = LightPurple; Number2 = Black;        break;  // волчиха в пустой клетке        - BitchWolf_Block
-                    case 113:   Str1 = "@@ ";   Str2 = "&&"; Number1 = LightRed;    Number2 = LightYellow;  break;  // волк с зайчихой                - Wolf_Hare
-                    case 114:   Str1 = "@@ @@"; Str2 = "\0"; Number1 = LightRed;    Number2 = Black;        break;  // два волка в одной клетке       - Wolf_Wolf
-                    case 115:   Str1 = "@@ @@"; Str2 = "\0"; Number1 = LightPurple; Number2 = Black;        break;  // две волчихи в одной клетке     - BitchWolf_BitchWolf
-                    case 116:   Str1 = "@@ ";   Str2 = "&&"; Number1 = LightRed;    Number2 = BrightWhite;  break;  // волк с зайцем                  - Wolf_Rabbit
-                    case 117:   Str1 = "@@ ";   Str2 = "&&"; Number1 = LightPurple; Number2 = BrightWhite;  break;  // волчиха с зайцем               - BitchWolf_Rabbit
-                    case 118:   Str1 = "@@ ";   Str2 = "&&"; Number1 = LightPurple; Number2 = LightYellow;  break;  // волчиха с зайчихой             - BitchWolf_Hare
-                    case 119:   Str1 = "@@ ";   Str2 = "@@"; Number1 = LightRed;    Number2 = LightPurple;  break;  // волк с волчихой                - Wolf_BitchWolf
-                    default:    Str1 = "\0";    Str2 = "\0"; Number1 = Black;       Number2 = Black;        break;  // значения по умолчанию
+                    case 100:   Str1 = "     "; Str2 = "\0"; Number1 = Black;       Number2 = Black;        break;  // РїСѓСЃС‚Р°СЏ РєР»РµС‚РєР°                  - Void_Block
+                    case 101:   Str1 = "** **"; Str2 = "\0"; Number1 = LightGreen;  Number2 = Black;        break;  // РєР»РµС‚РєР° СЃ С‚СЂР°РІРѕР№ (Р±РµР· Р¶РёРІРѕС‚РЅС‹С…) - Grass_Block
+                    case 102:   Str1 = "&& ";   Str2 = "**"; Number1 = BrightWhite; Number2 = LightGreen;   break;  // Р·Р°СЏС† РІ РєР»РµС‚РєРµ СЃ С‚СЂР°РІРѕР№         - Rabbit_Grass
+                    case 103:   Str1 = "&&   "; Str2 = "\0"; Number1 = BrightWhite; Number2 = Black;        break;  // Р·Р°СЏС† РІ РїСѓСЃС‚РѕР№ РєР»РµС‚РєРµ           - Rabbit_Block
+                    case 104:   Str1 = "&& ";   Str2 = "**"; Number1 = LightYellow; Number2 = LightGreen;   break;  // Р·Р°Р№С‡РёС…Р° РІ РєР»РµС‚РєРµ СЃ С‚СЂР°РІРѕР№      - Hare_Grass
+                    case 105:   Str1 = "&& ";   Str2 = "**"; Number1 = LightYellow; Number2 = Black;        break;  // Р·Р°Р№С‡РёС…Р° РІ РїСѓСЃС‚РѕР№ РєР»РµС‚РєРµ        - Hare_Block
+                    case 106:   Str1 = "&& ";   Str2 = "&&"; Number1 = BrightWhite; Number2 = LightYellow;  break;  // Р·Р°СЏС† РІ РєР»РµС‚РєРµ СЃ Р·Р°Р№С‡РёС…РѕР№       - Rabbit_Hare
+                    case 107:   Str1 = "&& &&"; Str2 = "\0"; Number1 = BrightWhite; Number2 = Black;        break;  // Р·Р°Р№С†С‹ РІ РѕРґРЅРѕР№ РєР»РµС‚РєРµ           - Rabbit_Rabbit
+                    case 108:   Str1 = "&& &&"; Str2 = "\0"; Number1 = LightYellow; Number2 = Black;        break;  // Р·Р°Р№С‡РёС…Рё РІ РѕРґРЅРѕР№ РєР»РµС‚РєРµ         - Hare_Hare
+                    case 109:   Str1 = "@@ ";   Str2 = "**"; Number1 = LightRed;    Number2 = LightGreen;   break;  // РІРѕР»Рє РІ РєР»РµС‚РєРµ СЃ С‚СЂР°РІРѕР№         - Wolf_Grass
+                    case 110:   Str1 = "@@ ";   Str2 = "  "; Number1 = LightRed;    Number2 = Black;        break;  // РІРѕР»Рє РІ РїСѓСЃС‚РѕР№ РєР»РµС‚РєРµ           - Wolf_Block
+                    case 111:   Str1 = "@@ ";   Str2 = "**"; Number1 = LightPurple; Number2 = LightGreen;   break;  // РІРѕР»С‡РёС…Р° РІ РєР»РµС‚РєРµ СЃ С‚СЂР°РІРѕР№      - BitchWolf_Grass
+                    case 112:   Str1 = "@@ ";   Str2 = "  "; Number1 = LightPurple; Number2 = Black;        break;  // РІРѕР»С‡РёС…Р° РІ РїСѓСЃС‚РѕР№ РєР»РµС‚РєРµ        - BitchWolf_Block
+                    case 113:   Str1 = "@@ ";   Str2 = "&&"; Number1 = LightRed;    Number2 = LightYellow;  break;  // РІРѕР»Рє СЃ Р·Р°Р№С‡РёС…РѕР№                - Wolf_Hare
+                    case 114:   Str1 = "@@ @@"; Str2 = "\0"; Number1 = LightRed;    Number2 = Black;        break;  // РґРІР° РІРѕР»РєР° РІ РѕРґРЅРѕР№ РєР»РµС‚РєРµ       - Wolf_Wolf
+                    case 115:   Str1 = "@@ @@"; Str2 = "\0"; Number1 = LightPurple; Number2 = Black;        break;  // РґРІРµ РІРѕР»С‡РёС…Рё РІ РѕРґРЅРѕР№ РєР»РµС‚РєРµ     - BitchWolf_BitchWolf
+                    case 116:   Str1 = "@@ ";   Str2 = "&&"; Number1 = LightRed;    Number2 = BrightWhite;  break;  // РІРѕР»Рє СЃ Р·Р°Р№С†РµРј                  - Wolf_Rabbit
+                    case 117:   Str1 = "@@ ";   Str2 = "&&"; Number1 = LightPurple; Number2 = BrightWhite;  break;  // РІРѕР»С‡РёС…Р° СЃ Р·Р°Р№С†РµРј               - BitchWolf_Rabbit
+                    case 118:   Str1 = "@@ ";   Str2 = "&&"; Number1 = LightPurple; Number2 = LightYellow;  break;  // РІРѕР»С‡РёС…Р° СЃ Р·Р°Р№С‡РёС…РѕР№             - BitchWolf_Hare
+                    case 119:   Str1 = "@@ ";   Str2 = "@@"; Number1 = LightRed;    Number2 = LightPurple;  break;  // РІРѕР»Рє СЃ РІРѕР»С‡РёС…РѕР№                - Wolf_BitchWolf
+                    default:    Str1 = "\0";    Str2 = "\0"; Number1 = Black;       Number2 = Black;        break;  // Р·РЅР°С‡РµРЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 
                 }
 
@@ -122,8 +122,8 @@ class GameProcess {
             Set_BackgroundColor ();
             cout << "|";
 
-        } // метод отрисовки блоков на карте со всеми возможными вариациами
+        } // РјРµС‚РѕРґ РѕС‚СЂРёСЃРѕРІРєРё Р±Р»РѕРєРѕРІ РЅР° РєР°СЂС‚Рµ СЃРѕ РІСЃРµРјРё РІРѕР·РјРѕР¶РЅС‹РјРё РІР°СЂРёР°С†РёР°РјРё
 
-}; // класс игрового процесса
+}; // РєР»Р°СЃСЃ РёРіСЂРѕРІРѕРіРѕ РїСЂРѕС†РµСЃСЃР°
 
 #endif // _gameprocess_H_

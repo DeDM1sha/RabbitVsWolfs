@@ -38,17 +38,17 @@ class ModelProcess {
 
     public:
 
-        int N; // размерность поля - кол-во строк
-        int M; // размерность поля - кол-во столбцов
-        int** Field; // поле модели
-        bool** Grass_Map; // расположение травы на карте
-        int Days; // кол-во дней, от начала работы модели
-        int CountGrass; // кол-во травы на карте
-        int HowRabbitsMan_OnMap; // кол-во зайцев на карте
-        int HowRabbitsWoman_OnMap; // кол-во зайчих на карте
-        int HowWolfsMan_OnMap; // кол-во волков на карте
-        int HowWolfsWoman_OnMap; // кол-во волчих на карте
-        string TimeOfYear; // время года
+        int N; // СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ РїРѕР»СЏ - РєРѕР»-РІРѕ СЃС‚СЂРѕРє
+        int M; // СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ РїРѕР»СЏ - РєРѕР»-РІРѕ СЃС‚РѕР»Р±С†РѕРІ
+        int** Field; // РїРѕР»Рµ РјРѕРґРµР»Рё
+        bool** Grass_Map; // СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ С‚СЂР°РІС‹ РЅР° РєР°СЂС‚Рµ
+        int Days; // РєРѕР»-РІРѕ РґРЅРµР№, РѕС‚ РЅР°С‡Р°Р»Р° СЂР°Р±РѕС‚С‹ РјРѕРґРµР»Рё
+        int CountGrass; // РєРѕР»-РІРѕ С‚СЂР°РІС‹ РЅР° РєР°СЂС‚Рµ
+        int HowRabbitsMan_OnMap; // РєРѕР»-РІРѕ Р·Р°Р№С†РµРІ РЅР° РєР°СЂС‚Рµ
+        int HowRabbitsWoman_OnMap; // РєРѕР»-РІРѕ Р·Р°Р№С‡РёС… РЅР° РєР°СЂС‚Рµ
+        int HowWolfsMan_OnMap; // РєРѕР»-РІРѕ РІРѕР»РєРѕРІ РЅР° РєР°СЂС‚Рµ
+        int HowWolfsWoman_OnMap; // РєРѕР»-РІРѕ РІРѕР»С‡РёС… РЅР° РєР°СЂС‚Рµ
+        string TimeOfYear; // РІСЂРµРјСЏ РіРѕРґР°
 
         ModelProcess (int Rows, int Columns) {
 
@@ -131,7 +131,7 @@ class ModelProcess {
                 for (int c = 0; c < this->M; c++)
                     Field[i][c] = Old_Field[i][c];
 
-        } // метод очистки поля
+        } // РјРµС‚РѕРґ РѕС‡РёСЃС‚РєРё РїРѕР»СЏ
 
         void Default_Settings (void) {
 
@@ -151,13 +151,13 @@ class ModelProcess {
             CONSOLE_CURSOR_INFO structCursorInfo;
             GetConsoleCursorInfo (handle, &structCursorInfo);
             structCursorInfo.bVisible = FALSE;
-            SetConsoleCursorInfo (handle, &structCursorInfo); // Отключение каретки
+            SetConsoleCursorInfo (handle, &structCursorInfo); // РћС‚РєР»СЋС‡РµРЅРёРµ РєР°СЂРµС‚РєРё
 
-            setlocale (LC_CTYPE, "Russian"); // Кириллица в консоли
-            system ("title Зайцы против волков"); // Заголовок программы
-            system ("color B"); // Светло-голубой цвет текста
+            setlocale (LC_CTYPE, "Russian"); // РљРёСЂРёР»Р»РёС†Р° РІ РєРѕРЅСЃРѕР»Рё
+            system ("title Р—Р°Р№С†С‹ РїСЂРѕС‚РёРІ РІРѕР»РєРѕРІ"); // Р—Р°РіРѕР»РѕРІРѕРє РїСЂРѕРіСЂР°РјРјС‹
+            system ("color B"); // РЎРІРµС‚Р»Рѕ-РіРѕР»СѓР±РѕР№ С†РІРµС‚ С‚РµРєСЃС‚Р°
 
-        } // метод настройки приложения
+        } // РјРµС‚РѕРґ РЅР°СЃС‚СЂРѕР№РєРё РїСЂРёР»РѕР¶РµРЅРёСЏ
 
 
         void CardLegend (GameProcess& Game, int Line) {
@@ -167,12 +167,12 @@ class ModelProcess {
 
                 switch (Line) {
 
-                    case 1: Str1 = "               Легенда карты";  Str2 = "\0";            Number = 11; break;
-                    case 2: Str1 = "               **";             Str2 = " - Трава";      Number = 10; break;
-                    case 3: Str1 = "               &&";             Str2 = " - Заяц";       Number = 15; break;
-                    case 4: Str1 = "               &&";             Str2 = " - Зайчиха";    Number = 14; break;
-                    case 5: Str1 = "               @@";             Str2 = " - Волк";       Number = 12; break;
-                    case 6: Str1 = "               @@";             Str2 = " - Волчиха";    Number = 13; break;
+                    case 1: Str1 = "               Р›РµРіРµРЅРґР° РєР°СЂС‚С‹";  Str2 = "\0";            Number = 11; break;
+                    case 2: Str1 = "               **";             Str2 = " - РўСЂР°РІР°";      Number = 10; break;
+                    case 3: Str1 = "               &&";             Str2 = " - Р—Р°СЏС†";       Number = 15; break;
+                    case 4: Str1 = "               &&";             Str2 = " - Р—Р°Р№С‡РёС…Р°";    Number = 14; break;
+                    case 5: Str1 = "               @@";             Str2 = " - Р’РѕР»Рє";       Number = 12; break;
+                    case 6: Str1 = "               @@";             Str2 = " - Р’РѕР»С‡РёС…Р°";    Number = 13; break;
                     default: Str1 = "\0";                           Str2 = "\0";            Number = 0;  break;
 
                 }
@@ -182,7 +182,7 @@ class ModelProcess {
             Game.Set_BackgroundColor ();
             cout << Str2;
 
-        } // метод отрисовки легенды карты
+        } // РјРµС‚РѕРґ РѕС‚СЂРёСЃРѕРІРєРё Р»РµРіРµРЅРґС‹ РєР°СЂС‚С‹
 
         string Determine_TimeOfYear (void) {
 
@@ -192,20 +192,20 @@ class ModelProcess {
                     DaysCount -= 364;
 
                 if (DaysCount > 336 || DaysCount < 63)
-                    TimeOfYear = "Зима";
+                    TimeOfYear = "Р—РёРјР°";
 
                 else if (DaysCount > 62 && DaysCount < 155)
-                    TimeOfYear = "Весна";
+                    TimeOfYear = "Р’РµСЃРЅР°";
 
                 else if (DaysCount > 154 && DaysCount < 247)
-                    TimeOfYear = "Лето";
+                    TimeOfYear = "Р›РµС‚Рѕ";
 
                 else
-                    TimeOfYear = "Осень";
+                    TimeOfYear = "РћСЃРµРЅСЊ";
 
             return this->TimeOfYear;
 
-        } // метод, определяющий месяц года
+        } // РјРµС‚РѕРґ, РѕРїСЂРµРґРµР»СЏСЋС‰РёР№ РјРµСЃСЏС† РіРѕРґР°
 
         void Random_Grass (void) {
 
@@ -227,7 +227,7 @@ class ModelProcess {
             }
 
 
-        } // метод рандомизации роста травы на карте
+        } // РјРµС‚РѕРґ СЂР°РЅРґРѕРјРёР·Р°С†РёРё СЂРѕСЃС‚Р° С‚СЂР°РІС‹ РЅР° РєР°СЂС‚Рµ
 
         bool Random_Sex (void) {
 
@@ -238,7 +238,7 @@ class ModelProcess {
 
             return true;
 
-        } // метод рандомизации пола животного
+        } // РјРµС‚РѕРґ СЂР°РЅРґРѕРјРёР·Р°С†РёРё РїРѕР»Р° Р¶РёРІРѕС‚РЅРѕРіРѕ
 
         int Random_Reproduction (string Animal) {
 
@@ -261,7 +261,7 @@ class ModelProcess {
                     else if (Number >= 81 && Number <= 100)
                         return 5;
 
-                } // для зайцев - от 1 до 5 особей
+                } // РґР»СЏ Р·Р°Р№С†РµРІ - РѕС‚ 1 РґРѕ 5 РѕСЃРѕР±РµР№
 
                 else if (Animal == "Wolf") {
 
@@ -274,13 +274,13 @@ class ModelProcess {
                     else if (Number >= 67 && Number <= 100)
                         return 3;
 
-                } // для волков - от 1 до 5 особей
+                } // РґР»СЏ РІРѕР»РєРѕРІ - РѕС‚ 1 РґРѕ 5 РѕСЃРѕР±РµР№
 
             return 0;
 
-        } // метод рандомизации кол-ва особей при рождении
+        } // РјРµС‚РѕРґ СЂР°РЅРґРѕРјРёР·Р°С†РёРё РєРѕР»-РІР° РѕСЃРѕР±РµР№ РїСЂРё СЂРѕР¶РґРµРЅРёРё
 
-}; // класс модели
+}; // РєР»Р°СЃСЃ РјРѕРґРµР»Рё
 
 int Minimum_Count (int& DefaultCount, int& StartCount) {
 
@@ -289,7 +289,7 @@ int Minimum_Count (int& DefaultCount, int& StartCount) {
 
     return StartCount;
 
-} // функция, возвращающая минимальное значение среди RabbitsCount / WolfsCount и StartAnimalCount соответствено
+} // С„СѓРЅРєС†РёСЏ, РІРѕР·РІСЂР°С‰Р°СЋС‰Р°СЏ РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃСЂРµРґРё RabbitsCount / WolfsCount Рё StartAnimalCount СЃРѕРѕС‚РІРµС‚СЃС‚РІРµРЅРѕ
 
 int main (void) {
 
@@ -299,17 +299,17 @@ int main (void) {
 
     Model->Default_Settings ();
 
-    unsigned short int Button = 0; // нажатая кнопка
-    bool Start = false; // первый запуск модели с новыми входными параметрами
-    int Counter = 0; // счетчик для родов
+    unsigned short int Button = 0; // РЅР°Р¶Р°С‚Р°СЏ РєРЅРѕРїРєР°
+    bool Start = false; // РїРµСЂРІС‹Р№ Р·Р°РїСѓСЃРє РјРѕРґРµР»Рё СЃ РЅРѕРІС‹РјРё РІС…РѕРґРЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё
+    int Counter = 0; // СЃС‡РµС‚С‡РёРє РґР»СЏ СЂРѕРґРѕРІ
 
-        while (true) { // жизненный цикл программы
+        while (true) { // Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РїСЂРѕРіСЂР°РјРјС‹
 
             Game.Preview ();
             Game.Center("_________________________________________\n");
-            Game.Center("| Enter. Запуск биологической модели     |\n");
+            Game.Center("| Enter. Р—Р°РїСѓСЃРє Р±РёРѕР»РѕРіРёС‡РµСЃРєРѕР№ РјРѕРґРµР»Рё     |\n");
             Game.Center("|----------------------------------------|\n");
-            Game.Center("| Esc. Выход из программы                |\n");
+            Game.Center("| Esc. Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹                |\n");
             Game.Center("|________________________________________|\n");
 
                 while (true) {
@@ -338,15 +338,15 @@ int main (void) {
                     queue <int> Rabbit_Reproduction;
                     queue <int> Wolf_Reproduction;
 
-                    cout.flush (); // очистка буфера в консоли
+                    cout.flush (); // РѕС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° РІ РєРѕРЅСЃРѕР»Рё
                     Game.Preview ();
-                    Game.Center ("Выберите способ размещения первых животных в модели\n");
+                    Game.Center ("Р’С‹Р±РµСЂРёС‚Рµ СЃРїРѕСЃРѕР± СЂР°Р·РјРµС‰РµРЅРёСЏ РїРµСЂРІС‹С… Р¶РёРІРѕС‚РЅС‹С… РІ РјРѕРґРµР»Рё\n");
                     Game.Center ("_____________________________________________\n");
-                    Game.Center ("| 1. Задать вручную                         |\n");
+                    Game.Center ("| 1. Р—Р°РґР°С‚СЊ РІСЂСѓС‡РЅСѓСЋ                         |\n");
                     Game.Center ("|-------------------------------------------|\n");
-                    Game.Center ("| 2. Рандомизировать размещение             |\n");
+                    Game.Center ("| 2. Р Р°РЅРґРѕРјРёР·РёСЂРѕРІР°С‚СЊ СЂР°Р·РјРµС‰РµРЅРёРµ             |\n");
                     Game.Center ("|-------------------------------------------|\n");
-                    Game.Center ("| Esc. Вернуться в меню                     |\n");
+                    Game.Center ("| Esc. Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РјРµРЅСЋ                     |\n");
                     Game.Center ("|___________________________________________|\n");
 
                          while (true) {
@@ -363,8 +363,8 @@ int main (void) {
                     cls;
                     Game.Preview ();
 
-                    Game.Center ("Задайте начальные значения для размещения животных:\n\n");
-                    Game.Center ("Максимальное количество зайцев в модели: ");
+                    Game.Center ("Р—Р°РґР°Р№С‚Рµ РЅР°С‡Р°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ СЂР°Р·РјРµС‰РµРЅРёСЏ Р¶РёРІРѕС‚РЅС‹С…:\n\n");
+                    Game.Center ("РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°Р№С†РµРІ РІ РјРѕРґРµР»Рё: ");
 
                         while (! (cin >> Game.RabbitsCount) || (cin.peek() != '\n')) {
 
@@ -376,7 +376,7 @@ int main (void) {
                         }
 
                     /*cout << "\n\n";
-                    Game.Center ("Максимальное количество волков в модели: ");
+                    Game.Center ("РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІРѕР»РєРѕРІ РІ РјРѕРґРµР»Рё: ");
 
                         while (! (cin >> Game.WolfsCount) || (cin.peek() != '\n')) {
 
@@ -388,7 +388,7 @@ int main (void) {
                         }*/
 
                     cout << "\n\n";
-                    Game.Center ("Стартовое количество разнотипных животных на карте: ");
+                    Game.Center ("РЎС‚Р°СЂС‚РѕРІРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЂР°Р·РЅРѕС‚РёРїРЅС‹С… Р¶РёРІРѕС‚РЅС‹С… РЅР° РєР°СЂС‚Рµ: ");
 
                         while (! (cin >> Game.StartAnimalCount) || (cin.peek() != '\n')) {
 
@@ -399,21 +399,21 @@ int main (void) {
 
                         }
 
-                    Rabbits Rabbit[Game.RabbitsCount]; // массив объектов зайцев
-                    Wolfs Wolf[Game.WolfsCount]; // массив объектов волков
+                    Rabbits Rabbit[Game.RabbitsCount]; // РјР°СЃСЃРёРІ РѕР±СЉРµРєС‚РѕРІ Р·Р°Р№С†РµРІ
+                    Wolfs Wolf[Game.WolfsCount]; // РјР°СЃСЃРёРІ РѕР±СЉРµРєС‚РѕРІ РІРѕР»РєРѕРІ
 
-                        while (true) { // жизненный цикл модели
+                        while (true) { // Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РјРѕРґРµР»Рё
 
-                                if (Start == false) { // если это первый запуск
+                                if (Start == false) { // РµСЃР»Рё СЌС‚Рѕ РїРµСЂРІС‹Р№ Р·Р°РїСѓСЃРє
 
-                                    if (Button == 49) { // начало размещения животных вручную
+                                    if (Button == 49) { // РЅР°С‡Р°Р»Рѕ СЂР°Р·РјРµС‰РµРЅРёСЏ Р¶РёРІРѕС‚РЅС‹С… РІСЂСѓС‡РЅСѓСЋ
 
                                         cls;
                                         Game.Preview();
 
-                                        Game.Center ("Задайте начальные координаты расположения для всех ");
-                                        cout << Game.RabbitsCount << " зайцев и "  << Game.WolfsCount << " волков (карта " << Game.Rows_Count << "x" << Game.Columns_Count << "):\n\n";
-                                        Game.Center ("Расположение зайцев:\n");
+                                        Game.Center ("Р—Р°РґР°Р№С‚Рµ РЅР°С‡Р°Р»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ РґР»СЏ РІСЃРµС… ");
+                                        cout << Game.RabbitsCount << " Р·Р°Р№С†РµРІ Рё "  << Game.WolfsCount << " РІРѕР»РєРѕРІ (РєР°СЂС‚Р° " << Game.Rows_Count << "x" << Game.Columns_Count << "):\n\n";
+                                        Game.Center ("Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ Р·Р°Р№С†РµРІ:\n");
 
                                             for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.StartAnimalCount); i++) {
 
@@ -429,10 +429,10 @@ int main (void) {
 
                                         cls;
                                         Game.Preview ();
-                        // перекопировать с зайцев
-                                        /*Game.Center ("Задайте начальные координаты расположения для всех ");
-                                        cout << Game.RabbitsCount << " зайцев и "  << Game.WolfsCount << " волков (карта " << Game.Rows_Count << "x" << Game.Columns_Count << "):\n\n";
-                                        Game.Center ("Расположение волков:\n");
+                        // РїРµСЂРµРєРѕРїРёСЂРѕРІР°С‚СЊ СЃ Р·Р°Р№С†РµРІ
+                                        /*Game.Center ("Р—Р°РґР°Р№С‚Рµ РЅР°С‡Р°Р»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ РґР»СЏ РІСЃРµС… ");
+                                        cout << Game.RabbitsCount << " Р·Р°Р№С†РµРІ Рё "  << Game.WolfsCount << " РІРѕР»РєРѕРІ (РєР°СЂС‚Р° " << Game.Rows_Count << "x" << Game.Columns_Count << "):\n\n";
+                                        Game.Center ("Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ РІРѕР»РєРѕРІ:\n");
 
                                             for (int i = 0; i < Minimum_Count(Game.WolfsCount, Game.StartAnimalCount); i++) {
 
@@ -447,17 +447,17 @@ int main (void) {
 
                                             }*/
 
-                                    } // конец размещения животных вручную
+                                    } // РєРѕРЅРµС† СЂР°Р·РјРµС‰РµРЅРёСЏ Р¶РёРІРѕС‚РЅС‹С… РІСЂСѓС‡РЅСѓСЋ
 
-                                    else if (Button == 50) { // рандомное размещение животных
+                                    else if (Button == 50) { // СЂР°РЅРґРѕРјРЅРѕРµ СЂР°Р·РјРµС‰РµРЅРёРµ Р¶РёРІРѕС‚РЅС‹С…
 
                                         for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.StartAnimalCount); i++) {
 
                                             Rabbit[i].X = 0 + rand () % 10;
                                             Rabbit[i].Y = 0 + rand () % 10;
 
-                                        } // рандомизация для зайцев
-                            // перекопировать с зайцев
+                                        } // СЂР°РЅРґРѕРјРёР·Р°С†РёСЏ РґР»СЏ Р·Р°Р№С†РµРІ
+                            // РїРµСЂРµРєРѕРїРёСЂРѕРІР°С‚СЊ СЃ Р·Р°Р№С†РµРІ
                                         /*for (int i = 0; i < Minimum_Count(Game.WolfsCount, Game.StartAnimalCount); i++) {
 
                                             Wolf[i].X = 0 + rand () % 10;
@@ -465,16 +465,16 @@ int main (void) {
                                             Wolf[i].Life = true;
                                             Wolf[i].Sex = Model->Random_Sex ();
 
-                                        } // рандомизация для волков*/
+                                        } // СЂР°РЅРґРѕРјРёР·Р°С†РёСЏ РґР»СЏ РІРѕР»РєРѕРІ*/
 
-                                    } // конец рандомного размещения животных
+                                    } // РєРѕРЅРµС† СЂР°РЅРґРѕРјРЅРѕРіРѕ СЂР°Р·РјРµС‰РµРЅРёСЏ Р¶РёРІРѕС‚РЅС‹С…
 
                                         for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.StartAnimalCount); i++) {
 
                                             Rabbit[i].Life = true;
                                             Rabbit[i].Sex = Model->Random_Sex ();
 
-                                        } // общие страртовые значения для зайцев
+                                        } // РѕР±С‰РёРµ СЃС‚СЂР°СЂС‚РѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ Р·Р°Р№С†РµРІ
 
                                         for (int i = 0; i < Model->N; i++) {
 
@@ -487,7 +487,7 @@ int main (void) {
                                     Start = true;
 
                                 }
-                    // тестирование
+                    // С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ
                                 if (Button == 55) {
 
                                     Rabbit[0].Life = true;
@@ -501,7 +501,7 @@ int main (void) {
 
                                 }
 
-                    // начало работы модели
+                    // РЅР°С‡Р°Р»Рѕ СЂР°Р±РѕС‚С‹ РјРѕРґРµР»Рё
 
                             Model->CountGrass = 0;
                             Model->HowRabbitsMan_OnMap = 0;
@@ -526,17 +526,17 @@ int main (void) {
 
                                                 for (int g = 0; g < Game.RabbitsCount; g++) {
 
-                                                        if (Rabbit[g].Life == true) { // если заяц жив - существует
+                                                        if (Rabbit[g].Life == true) { // РµСЃР»Рё Р·Р°СЏС† Р¶РёРІ - СЃСѓС‰РµСЃС‚РІСѓРµС‚
 
-                                                                if (Rabbit[g].X == i && Rabbit[g].Y == c) { // если координата зайца соответствует ячейке на карте
+                                                                if (Rabbit[g].X == i && Rabbit[g].Y == c) { // РµСЃР»Рё РєРѕРѕСЂРґРёРЅР°С‚Р° Р·Р°Р№С†Р° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ СЏС‡РµР№РєРµ РЅР° РєР°СЂС‚Рµ
 
                                                                     if (Model->Grass_Map[i][c] == true) {
 
                                                                         Rabbit[g].Food += 11;
                                                                         Model->Field[i][c] = Void_Block;
-                                                                        Model->Grass_Map[i][c] = false; // один заяц - есть всю клетку с травой
+                                                                        Model->Grass_Map[i][c] = false; // РѕРґРёРЅ Р·Р°СЏС† - РµСЃС‚СЊ РІСЃСЋ РєР»РµС‚РєСѓ СЃ С‚СЂР°РІРѕР№
 
-                                                                    } // в блок есть трава, зайцы ее съедят
+                                                                    } // РІ Р±Р»РѕРє РµСЃС‚СЊ С‚СЂР°РІР°, Р·Р°Р№С†С‹ РµРµ СЃСЉРµРґСЏС‚
 
                                                                     if (g == 0) {
 
@@ -546,7 +546,7 @@ int main (void) {
 
                                                                         }
 
-                                                                    } // в самой первой ячейке
+                                                                    } // РІ СЃР°РјРѕР№ РїРµСЂРІРѕР№ СЏС‡РµР№РєРµ
 
                                                                     else if (g > 0 && g < Game.RabbitsCount - 1) {
 
@@ -566,16 +566,16 @@ int main (void) {
 
                                                                         }
 
-                                                                    } // в самой первой ячейке
+                                                                    } // РІ СЃР°РјРѕР№ РїРµСЂРІРѕР№ СЏС‡РµР№РєРµ
 
-                                                            // случай когда заяц с зайяихой в одном блоке
+                                                            // СЃР»СѓС‡Р°Р№ РєРѕРіРґР° Р·Р°СЏС† СЃ Р·Р°Р№СЏРёС…РѕР№ РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
                                                                 if (Model->Field[i][c] == Rabbit_Hare) {
 
                                                                         if (Counter > 0)
                                                                             Counter--;
 
-                                                                        else if (Model->TimeOfYear != "Зима") { // зимой размножения не будет
+                                                                        else if (Model->TimeOfYear != "Р—РёРјР°") { // Р·РёРјРѕР№ СЂР°Р·РјРЅРѕР¶РµРЅРёСЏ РЅРµ Р±СѓРґРµС‚
 
                                                                             Counter = 10;
 
@@ -590,13 +590,13 @@ int main (void) {
 
                                                                     continue;
 
-                                                                } // раз заяц в клетке с зайчихой, значит будут размножаться
+                                                                } // СЂР°Р· Р·Р°СЏС† РІ РєР»РµС‚РєРµ СЃ Р·Р°Р№С‡РёС…РѕР№, Р·РЅР°С‡РёС‚ Р±СѓРґСѓС‚ СЂР°Р·РјРЅРѕР¶Р°С‚СЊСЃСЏ
 
-                                                                else if (Model->Field[i][c] != Rabbit_Hare) { // если эта клетка не занята зайцем и зайчихой
+                                                                else if (Model->Field[i][c] != Rabbit_Hare) { // РµСЃР»Рё СЌС‚Р° РєР»РµС‚РєР° РЅРµ Р·Р°РЅСЏС‚Р° Р·Р°Р№С†РµРј Рё Р·Р°Р№С‡РёС…РѕР№
 
-                                                                    if (Rabbit[g].Sex == true) { // если это заяц мужского пола
+                                                                    if (Rabbit[g].Sex == true) { // РµСЃР»Рё СЌС‚Рѕ Р·Р°СЏС† РјСѓР¶СЃРєРѕРіРѕ РїРѕР»Р°
 
-                                                                        if (g == 0) { // для самой первой ячейки
+                                                                        if (g == 0) { // РґР»СЏ СЃР°РјРѕР№ РїРµСЂРІРѕР№ СЏС‡РµР№РєРё
 
                                                                             if ( (Rabbit[g].Sex == true && Rabbit[g + 1].Sex == true) && ((Model->Field[i][c] == Rabbit_Block) || (Model->Field[i][c] == Rabbit_Grass) || (Model->Field[i][c] == Rabbit_Rabbit)) ) {
 
@@ -605,9 +605,9 @@ int main (void) {
 
                                                                             }
 
-                                                                        } // два зайца в одном блоке
+                                                                        } // РґРІР° Р·Р°Р№С†Р° РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                                        else if (g > 0 && g < Game.RabbitsCount - 1) { // для всех остальных
+                                                                        else if (g > 0 && g < Game.RabbitsCount - 1) { // РґР»СЏ РІСЃРµС… РѕСЃС‚Р°Р»СЊРЅС‹С…
 
                                                                             if ( ((Rabbit[g].Sex == true && Rabbit[g + 1].Sex == true) || (Rabbit[g].Sex == true && Rabbit[g - 1].Sex == true)) && ((Model->Field[i][c] == Rabbit_Block) || (Model->Field[i][c] == Rabbit_Grass) || (Model->Field[i][c] == Rabbit_Rabbit)) ) {
 
@@ -616,9 +616,9 @@ int main (void) {
 
                                                                             }
 
-                                                                        } // два зайца в одном блоке
+                                                                        } // РґРІР° Р·Р°Р№С†Р° РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                                        else if (g == Game.RabbitsCount - 1) { // для самой последней ячейки
+                                                                        else if (g == Game.RabbitsCount - 1) { // РґР»СЏ СЃР°РјРѕР№ РїРѕСЃР»РµРґРЅРµР№ СЏС‡РµР№РєРё
 
                                                                             if ( (Rabbit[g].Sex == true && Rabbit[g - 1].Sex == true) && ((Model->Field[i][c] == Rabbit_Block) || (Model->Field[i][c] == Rabbit_Grass) || (Model->Field[i][c] == Rabbit_Rabbit)) ) {
 
@@ -627,19 +627,19 @@ int main (void) {
 
                                                                             }
 
-                                                                        } // два зайца в одном блоке
+                                                                        } // РґРІР° Р·Р°Р№С†Р° РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                                        if ( Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Rabbit_Grass) // если в ячейке уже есть трава
+                                                                        if ( Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Rabbit_Grass) // РµСЃР»Рё РІ СЏС‡РµР№РєРµ СѓР¶Рµ РµСЃС‚СЊ С‚СЂР°РІР°
                                                                             Model->Field[i][c] = Rabbit_Grass;
 
-                                                                        else if (Model->Field[i][c] != Rabbit_Grass || Model->Field[i][c] == Void_Block) // если в ячейке нет травы
+                                                                        else if (Model->Field[i][c] != Rabbit_Grass || Model->Field[i][c] == Void_Block) // РµСЃР»Рё РІ СЏС‡РµР№РєРµ РЅРµС‚ С‚СЂР°РІС‹
                                                                             Model->Field[i][c] = Rabbit_Block;
 
-                                                                    } // конец мужского пола зайцев
+                                                                    } // РєРѕРЅРµС† РјСѓР¶СЃРєРѕРіРѕ РїРѕР»Р° Р·Р°Р№С†РµРІ
 
-                                                                    else if (Rabbit[g].Sex == false) { // если это зайчиха женского пола
+                                                                    else if (Rabbit[g].Sex == false) { // РµСЃР»Рё СЌС‚Рѕ Р·Р°Р№С‡РёС…Р° Р¶РµРЅСЃРєРѕРіРѕ РїРѕР»Р°
 
-                                                                        if (g == 0) { // для самой первой ячейки
+                                                                        if (g == 0) { // РґР»СЏ СЃР°РјРѕР№ РїРµСЂРІРѕР№ СЏС‡РµР№РєРё
 
                                                                             if ( (Rabbit[g].Sex == false && Rabbit[g + 1].Sex == false) && ((Model->Field[i][c] == Hare_Block) || (Model->Field[i][c] == Hare_Grass) || (Model->Field[i][c] == Hare_Hare)) ) {
 
@@ -648,9 +648,9 @@ int main (void) {
 
                                                                             }
 
-                                                                        } // две зайчихи в одном блоке
+                                                                        } // РґРІРµ Р·Р°Р№С‡РёС…Рё РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                                        else if (g > 0 && g < Game.RabbitsCount - 1) { // для всех остальных
+                                                                        else if (g > 0 && g < Game.RabbitsCount - 1) { // РґР»СЏ РІСЃРµС… РѕСЃС‚Р°Р»СЊРЅС‹С…
 
                                                                             if ( ((Rabbit[g].Sex == false && Rabbit[g + 1].Sex == false) || (Rabbit[g].Sex == false && Rabbit[g - 1].Sex == false)) && ((Model->Field[i][c] == Hare_Block) || (Model->Field[i][c] == Hare_Grass) || (Model->Field[i][c] == Hare_Hare)) ) {
 
@@ -659,9 +659,9 @@ int main (void) {
 
                                                                             }
 
-                                                                        } // две зайчихи в одном блоке
+                                                                        } // РґРІРµ Р·Р°Р№С‡РёС…Рё РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                                        else if (g == Game.RabbitsCount - 1) { // для самой последней ячейки
+                                                                        else if (g == Game.RabbitsCount - 1) { // РґР»СЏ СЃР°РјРѕР№ РїРѕСЃР»РµРґРЅРµР№ СЏС‡РµР№РєРё
 
                                                                             if ( (Rabbit[g].Sex == false && Rabbit[g - 1].Sex == false) && ((Model->Field[i][c] == Hare_Block) || (Model->Field[i][c] == Hare_Grass) || (Model->Field[i][c] == Hare_Hare)) ) {
 
@@ -670,45 +670,45 @@ int main (void) {
 
                                                                             }
 
-                                                                        } // две зайчихи в одном блоке
+                                                                        } // РґРІРµ Р·Р°Р№С‡РёС…Рё РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                                        if (Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Rabbit_Grass) // если в ячейке уже есть трава
+                                                                        if (Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Rabbit_Grass) // РµСЃР»Рё РІ СЏС‡РµР№РєРµ СѓР¶Рµ РµСЃС‚СЊ С‚СЂР°РІР°
                                                                             Model->Field[i][c] = Hare_Grass;
 
-                                                                        else if (Model->Field[i][c] != Rabbit_Grass || Model->Field[i][c] == Void_Block) // если в ячейке нет травы
+                                                                        else if (Model->Field[i][c] != Rabbit_Grass || Model->Field[i][c] == Void_Block) // РµСЃР»Рё РІ СЏС‡РµР№РєРµ РЅРµС‚ С‚СЂР°РІС‹
                                                                             Model->Field[i][c] = Hare_Block;
 
-                                                                    } // конец зайчихи женского пола
+                                                                    } // РєРѕРЅРµС† Р·Р°Р№С‡РёС…Рё Р¶РµРЅСЃРєРѕРіРѕ РїРѕР»Р°
 
-                                                        /////////////////////////////////////// блок проверки зайца с зайчихой в одной клетке
+                                                        /////////////////////////////////////// Р±Р»РѕРє РїСЂРѕРІРµСЂРєРё Р·Р°Р№С†Р° СЃ Р·Р°Р№С‡РёС…РѕР№ РІ РѕРґРЅРѕР№ РєР»РµС‚РєРµ
 
-                                                                   /* if (i == 0 && c == 0) { // для самой первой ячейки
+                                                                   /* if (i == 0 && c == 0) { // РґР»СЏ СЃР°РјРѕР№ РїРµСЂРІРѕР№ СЏС‡РµР№РєРё
 
                                                                         if ( ((Rabbit[g].Sex == true && Rabbit[g + 1].Sex == false) || (Rabbit[g].Sex == false && Rabbit[g + 1].Sex == true)) && ((Model->Field[i][c] == Rabbit_Grass) || (Model->Field[i][c] == Rabbit_Block) || (Model->Field[i][c] == Rabbit_Rabbit) || (Model->Field[i][c] == Hare_Grass) || (Model->Field[i][c] == Hare_Block) || (Model->Field[i][c] == Rabbit_Hare) || (Model->Field[i][c] == Hare_Hare)) )
                                                                             Model->Field[i][c] = Rabbit_Hare;
 
-                                                                    } // заяц с зайчихой в одном блоке
+                                                                    } // Р·Р°СЏС† СЃ Р·Р°Р№С‡РёС…РѕР№ РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                                    else if (i != 9 && c != 9) { // для всех остальных ячеек
+                                                                    else if (i != 9 && c != 9) { // РґР»СЏ РІСЃРµС… РѕСЃС‚Р°Р»СЊРЅС‹С… СЏС‡РµРµРє
 
                                                                         if ( ((Rabbit[g].Sex == true && Rabbit[g + 1].Sex == false) || (Rabbit[g].Sex == true && Rabbit[g - 1].Sex == false) || (Rabbit[g].Sex == false && Rabbit[g + 1].Sex == true) || (Rabbit[g].Sex == false && Rabbit[g - 1].Sex == true)) && ((Model->Field[i][c] == Rabbit_Grass) || (Model->Field[i][c] == Rabbit_Block) || (Model->Field[i][c] == Rabbit_Rabbit) || (Model->Field[i][c] == Hare_Grass) || (Model->Field[i][c] == Hare_Block) || (Model->Field[i][c] == Rabbit_Hare) || (Model->Field[i][c] == Hare_Hare)) )
                                                                             Model->Field[i][c] = Rabbit_Hare;
 
-                                                                    } // заяц с зайчихой в одном блоке
+                                                                    } // Р·Р°СЏС† СЃ Р·Р°Р№С‡РёС…РѕР№ РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                                    else if (i == 9 && c == 9) { // для самой последней ячейки
+                                                                    else if (i == 9 && c == 9) { // РґР»СЏ СЃР°РјРѕР№ РїРѕСЃР»РµРґРЅРµР№ СЏС‡РµР№РєРё
 
                                                                         if ( ((Rabbit[g].Sex == true && Rabbit[g - 1].Sex == false) || (Rabbit[g].Sex == false && Rabbit[g - 1].Sex == true)) && ((Model->Field[i][c] == Rabbit_Grass) || (Model->Field[i][c] == Rabbit_Block) || (Model->Field[i][c] == Rabbit_Rabbit) || (Model->Field[i][c] == Hare_Grass) || (Model->Field[i][c] == Hare_Block) || (Model->Field[i][c] == Rabbit_Hare) || (Model->Field[i][c] == Hare_Hare)) )
                                                                             Model->Field[i][c] = Rabbit_Hare;
 
 
-                                                                    } // заяц с зайчихой в одном блоке
+                                                                    } // Р·Р°СЏС† СЃ Р·Р°Р№С‡РёС…РѕР№ РІ РѕРґРЅРѕРј Р±Р»РѕРєРµ
 
-                                                        /////////////////////////////////////// блок проверки зайца с зайчихой в одной клетке
+                                                        /////////////////////////////////////// Р±Р»РѕРє РїСЂРѕРІРµСЂРєРё Р·Р°Р№С†Р° СЃ Р·Р°Р№С‡РёС…РѕР№ РІ РѕРґРЅРѕР№ РєР»РµС‚РєРµ
                                                                     */
-                                                                } // конец проверки, что заяц не находится в одной клетке с зайчихой
+                                                                } // РєРѕРЅРµС† РїСЂРѕРІРµСЂРєРё, С‡С‚Рѕ Р·Р°СЏС† РЅРµ РЅР°С…РѕРґРёС‚СЃСЏ РІ РѕРґРЅРѕР№ РєР»РµС‚РєРµ СЃ Р·Р°Р№С‡РёС…РѕР№
 
-                                                                } // конец проверки координатов зайцев с полем
+                                                                } // РєРѕРЅРµС† РїСЂРѕРІРµСЂРєРё РєРѕРѕСЂРґРёРЅР°С‚РѕРІ Р·Р°Р№С†РµРІ СЃ РїРѕР»РµРј
 
                                                             /*if (Rabbit[g].HasMoved == false) {
 
@@ -717,17 +717,17 @@ int main (void) {
 
                                                             }*/
 
-                                                        } // конец проверки жизни зайца
+                                                        } // РєРѕРЅРµС† РїСЂРѕРІРµСЂРєРё Р¶РёР·РЅРё Р·Р°Р№С†Р°
 
-                                                    } // конец цикла перебора зайцев
+                                                    } // РєРѕРЅРµС† С†РёРєР»Р° РїРµСЂРµР±РѕСЂР° Р·Р°Р№С†РµРІ
 
-                                        // перекопировать с зайцев
+                                        // РїРµСЂРµРєРѕРїРёСЂРѕРІР°С‚СЊ СЃ Р·Р°Р№С†РµРІ
                                             Field_Draw.push(Model->Field[i][c]);
 
                                                 if (Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Rabbit_Grass || Model->Field[i][c] == Hare_Grass || Model->Field[i][c] == Wolf_Grass || Model->Field[i][c] == BitchWolf_Grass)
                                                     Model->CountGrass++;
 
-                                        } // конец просчета по столбцам
+                                        } // РєРѕРЅРµС† РїСЂРѕСЃС‡РµС‚Р° РїРѕ СЃС‚РѕР»Р±С†Р°Рј
 
                                         while (!Field_Draw.empty ()) {
 
@@ -745,7 +745,7 @@ int main (void) {
                                     cout << "\n\n";
 
 
-                                } // конец просчета всего поля
+                                } // РєРѕРЅРµС† РїСЂРѕСЃС‡РµС‚Р° РІСЃРµРіРѕ РїРѕР»СЏ
 
                                 for (int g = 0; g < Game.RabbitsCount; g++) {
 
@@ -761,12 +761,12 @@ int main (void) {
                                     Rabbit[g].MaxDays -= 10;
 
                                         if (Rabbit[g].MaxDays <= 0)
-                                            Rabbit[g].Life = false; // смерть от старости
+                                            Rabbit[g].Life = false; // СЃРјРµСЂС‚СЊ РѕС‚ СЃС‚Р°СЂРѕСЃС‚Рё
 
-                                    Rabbit[g].Food--; // уменьшение запаса пищи в организме
+                                    Rabbit[g].Food--; // СѓРјРµРЅСЊС€РµРЅРёРµ Р·Р°РїР°СЃР° РїРёС‰Рё РІ РѕСЂРіР°РЅРёР·РјРµ
 
                                         if (Rabbit[g].Food <= 0)
-                                            Rabbit[g].Life = false; // смерть от голода
+                                            Rabbit[g].Life = false; // СЃРјРµСЂС‚СЊ РѕС‚ РіРѕР»РѕРґР°
 
                                     }
 
@@ -783,22 +783,22 @@ int main (void) {
 
                                     }
 
-                                } // повторный проход по всем зайцам, для произведения вычислений
+                                } // РїРѕРІС‚РѕСЂРЅС‹Р№ РїСЂРѕС…РѕРґ РїРѕ РІСЃРµРј Р·Р°Р№С†Р°Рј, РґР»СЏ РїСЂРѕРёР·РІРµРґРµРЅРёСЏ РІС‹С‡РёСЃР»РµРЅРёР№
 
                             Model->Days += 10;
                             Model->Determine_TimeOfYear ();
-                            cout << "\nПрошло дней: " << Model->Days << "               Время года: " << Model->TimeOfYear << "\n\n";
-                            cout << "Количество зайцев: " << Model->HowRabbitsMan_OnMap << "           Количество волков: " << Model->HowWolfsMan_OnMap << "\n\n";
-                            cout << "Количество зайчих: " << Model->HowRabbitsWoman_OnMap << "           Количество волчих: " << Model->HowWolfsWoman_OnMap << "\n\n";
-                            cout << "Количество блоков с травой: " << Model->CountGrass;
+                            cout << "\nРџСЂРѕС€Р»Рѕ РґРЅРµР№: " << Model->Days << "               Р’СЂРµРјСЏ РіРѕРґР°: " << Model->TimeOfYear << "\n\n";
+                            cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°Р№С†РµРІ: " << Model->HowRabbitsMan_OnMap << "           РљРѕР»РёС‡РµСЃС‚РІРѕ РІРѕР»РєРѕРІ: " << Model->HowWolfsMan_OnMap << "\n\n";
+                            cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°Р№С‡РёС…: " << Model->HowRabbitsWoman_OnMap << "           РљРѕР»РёС‡РµСЃС‚РІРѕ РІРѕР»С‡РёС…: " << Model->HowWolfsWoman_OnMap << "\n\n";
+                            cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ Р±Р»РѕРєРѕРІ СЃ С‚СЂР°РІРѕР№: " << Model->CountGrass;
                        //if (RabbitSum == 0 && RabbitGirlSum == 0 && WolfSum == 0 && WolfGirlSum == 0)
-                         //   cout << "      | Ничья, погибли все!";
+                         //   cout << "      | РќРёС‡СЊСЏ, РїРѕРіРёР±Р»Рё РІСЃРµ!";
                        /*else
                        {
                            if (RabbitSum == 0 && RabbitGirlSum == 0)
-                                cout << "      | Зайцы умерли, волки победили!";
+                                cout << "      | Р—Р°Р№С†С‹ СѓРјРµСЂР»Рё, РІРѕР»РєРё РїРѕР±РµРґРёР»Рё!";
                            if (WolfSum == 0 && WolfGirlSum == 0)
-                                cout << "      | Волки умерли, зайцы победили!";
+                                cout << "      | Р’РѕР»РєРё СѓРјРµСЂР»Рё, Р·Р°Р№С†С‹ РїРѕР±РµРґРёР»Рё!";
                        }*/
 
 
@@ -810,17 +810,17 @@ int main (void) {
                                         if (Button == 27 || Button == 13)
                                             break;
 
-                                } // продолжение / завершение работы модели
+                                } // РїСЂРѕРґРѕР»Р¶РµРЅРёРµ / Р·Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹ РјРѕРґРµР»Рё
 
                                 if (Button == 27)
                                     break;
 
-                        } // конец жизненного цикла модели
+                        } // РєРѕРЅРµС† Р¶РёР·РЅРµРЅРЅРѕРіРѕ С†РёРєР»Р° РјРѕРґРµР»Рё
 
-                } // конец Button == 13
+                } // РєРѕРЅРµС† Button == 13
 
-                } // конец запуска модели
+                } // РєРѕРЅРµС† Р·Р°РїСѓСЃРєР° РјРѕРґРµР»Рё
 
-        } // конец жизненного цикла программы
+        } // РєРѕРЅРµС† Р¶РёР·РЅРµРЅРЅРѕРіРѕ С†РёРєР»Р° РїСЂРѕРіСЂР°РјРјС‹
 
 }
