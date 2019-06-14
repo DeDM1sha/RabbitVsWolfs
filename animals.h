@@ -153,7 +153,7 @@ class Rabbits : public Animals {
         Rabbits (void) : Animals () {
 
             Food = 30;
-            MaxDays = 2190; // 6 лет жизни
+            MaxDays = 2200; // 6 лет жизни
 
         };
 
@@ -168,7 +168,7 @@ class Wolfs : public Animals {
         Wolfs (void) : Animals () {
 
             Food = 100;
-            MaxDays = 3660; // 10 лет жизни
+            MaxDays = 3700; // 10 лет жизни
 
         };
 

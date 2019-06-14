@@ -82,12 +82,12 @@ class ModelProcess {
 
         }
 
-        void Show_Coordinates (Animals& Object) {
+        /*void Show_Coordinates (Animals& Object) {
 
             cout << "\nX: " << Object.X;
             cout << "\nY: " << Object.Y;
 
-        }
+        }*/
 
         ~ModelProcess (void) {
 
@@ -240,6 +240,46 @@ class ModelProcess {
 
         } // метод рандомизации пола животного
 
+        int Random_Reproduction (string Animal) {
+
+            unsigned short int Number = 0 + rand () % 101;
+
+                if (Animal == "Rabbit") {
+
+                    if (Number >= 0 && Number <= 20)
+                        return 1;
+
+                    else if (Number >= 21 && Number <= 40)
+                        return 2;
+
+                    else if (Number >= 41 && Number <= 60)
+                        return 3;
+
+                    else if (Number >= 61 && Number <= 80)
+                        return 4;
+
+                    else if (Number >= 81 && Number <= 100)
+                        return 5;
+
+                } // для зайцев - от 1 до 5 особей
+
+                else if (Animal == "Wolf") {
+
+                    if (Number >= 0 && Number <= 33)
+                        return 1;
+
+                    else if (Number >= 34 && Number <= 66)
+                        return 2;
+
+                    else if (Number >= 67 && Number <= 100)
+                        return 3;
+
+                } // для волков - от 1 до 5 особей
+
+            return 0;
+
+        } // метод рандомизации кол-ва особей при рождении
+
 }; // класс модели
 
 int Minimum_Count (int& DefaultCount, int& StartCount) {
@@ -260,7 +300,8 @@ int main (void) {
     Model->Default_Settings ();
 
     unsigned short int Button = 0; // нажатая кнопка
-    bool Start = false;
+    bool Start = false; // первый запуск модели с новыми входными параметрами
+    int Counter = 0; // счетчик для родов
 
         while (true) { // жизненный цикл программы
 
@@ -294,6 +335,8 @@ int main (void) {
                     Button = 0;
                     Start = false;
                     queue <int> Field_Draw;
+                    queue <int> Rabbit_Reproduction;
+                    queue <int> Wolf_Reproduction;
 
                     cout.flush (); // очистка буфера в консоли
                     Game.Preview ();
@@ -500,7 +543,6 @@ int main (void) {
                                                                         if (((Rabbit[g].Sex == true && Rabbit[g + 1].Sex == false) || (Rabbit[g].Sex == false && Rabbit[g + 1].Sex == true)) && (Rabbit[g].X == Rabbit[g + 1].X && Rabbit[g].Y == Rabbit[g + 1].Y)) {
 
                                                                             Model->Field[i][c] = Rabbit_Hare;
-                                                                            continue;
 
                                                                         }
 
@@ -511,7 +553,6 @@ int main (void) {
                                                                         if (((Rabbit[g].Sex == true && Rabbit[g + 1].Sex == false) || (Rabbit[g].Sex == false && Rabbit[g + 1].Sex == true) || (Rabbit[g].Sex == true && Rabbit[g - 1].Sex == false) || (Rabbit[g].Sex == false && Rabbit[g - 1].Sex == true)) && ((Rabbit[g].X == Rabbit[g + 1].X && Rabbit[g].Y == Rabbit[g + 1].Y) || (Rabbit[g].X == Rabbit[g - 1].X && Rabbit[g].Y == Rabbit[g - 1].Y))) {
 
                                                                             Model->Field[i][c] = Rabbit_Hare;
-                                                                            continue;
 
                                                                         }
 
@@ -522,7 +563,6 @@ int main (void) {
                                                                         if (((Rabbit[g].Sex == true && Rabbit[g - 1].Sex == false) || (Rabbit[g].Sex == false && Rabbit[g - 1].Sex == true)) && (Rabbit[g].X == Rabbit[g - 1].X && Rabbit[g].Y == Rabbit[g - 1].Y)) {
 
                                                                             Model->Field[i][c] = Rabbit_Hare;
-                                                                            continue;
 
                                                                         }
 
@@ -530,7 +570,29 @@ int main (void) {
 
                                                             // случай когда заяц с зайяихой в одном блоке
 
-                                                                if (Model->Field[i][c] != Rabbit_Hare) { // если эта клетка не занята зайцем и зайчихой
+                                                                if (Model->Field[i][c] == Rabbit_Hare) {
+
+                                                                        if (Counter > 0)
+                                                                            Counter--;
+
+                                                                        else if (Model->TimeOfYear != "Зима") { // зимой размножения не будет
+
+                                                                            Counter = 10;
+
+                                                                                for (int k = 0; k < Model->Random_Reproduction("Rabbit"); k++) {
+
+                                                                                    Rabbit_Reproduction.push(Rabbit[g].X);
+                                                                                    Rabbit_Reproduction.push(Rabbit[g].Y);
+
+                                                                                }
+
+                                                                        }
+
+                                                                    continue;
+
+                                                                } // раз заяц в клетке с зайчихой, значит будут размножаться
+
+                                                                else if (Model->Field[i][c] != Rabbit_Hare) { // если эта клетка не занята зайцем и зайчихой
 
                                                                     if (Rabbit[g].Sex == true) { // если это заяц мужского пола
 
@@ -705,6 +767,19 @@ int main (void) {
 
                                         if (Rabbit[g].Food <= 0)
                                             Rabbit[g].Life = false; // смерть от голода
+
+                                    }
+
+                                    else if (Rabbit[g].Life != true && !Rabbit_Reproduction.empty()) {
+
+                                        Rabbit[g].Life = true;
+                                        Rabbit[g].Sex = Model->Random_Sex ();
+                                        Rabbit[g].X = Rabbit_Reproduction.front ();
+                                        Rabbit_Reproduction.pop ();
+                                        Rabbit[g].Y = Rabbit_Reproduction.front ();
+                                        Rabbit_Reproduction.pop ();
+                                        Rabbit[g].Food = 30;
+                                        Rabbit[g].MaxDays = 2200;
 
                                     }
 
