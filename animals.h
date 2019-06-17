@@ -20,7 +20,6 @@ class Animals {
             Sex = false;
             X = 0;
             Y = 0;
-
         }
 
         ~Animals (void) {}
@@ -167,7 +166,7 @@ class Wolfs : public Animals {
 
         Wolfs (void) : Animals () {
 
-            Food = 100;
+            Food = 50;
             MaxDays = 3700; // 10 лет жизни
 
         };

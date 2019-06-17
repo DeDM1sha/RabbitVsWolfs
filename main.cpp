@@ -5,6 +5,7 @@
 #include <time.h>
 #include <queue>
 #include <iomanip>
+#include <sstream>
 
 #define Void_Block 100
 #define Grass_Block 101
@@ -35,6 +36,74 @@
 
 using namespace std;
 
+string Int_To_String (int Number) {
+
+    ostringstream NumToString;
+    NumToString << Number;
+
+    return NumToString.str();
+
+} // функция перевода из int в string
+
+class ModelLogs {
+
+    public:
+
+        string Event_A; // первое событие - скрещивание волков
+        string Event_B; // второе событие - скрещивание зайцев
+        string Event_C; // третье событие - поедание волком зайца
+        int CountEvents_A; // кол-во первых событий
+        int CountEvents_B; // кол-во вторых событий
+        int CountEvents_C; // кол-во третих событий
+
+        ModelLogs (void) {
+
+        	ClearEvents ();
+
+        }
+
+        ~ModelLogs (void) {}
+
+        void ClearEvents (void) {
+
+        	Event_A = "\0";
+        	Event_B = "\0";
+        	Event_C = "\0";
+        	CountEvents_A = 0;
+        	CountEvents_B = 0;
+        	CountEvents_C = 0;
+
+        } // очистка значений
+
+        void Show_Events (GameProcess& Game, int Line) {
+
+            unsigned short int Number = 0;
+            string Str1 = "\0", Str2 = "\0";
+
+                if (CountEvents_A > 0 || CountEvents_B > 0 || CountEvents_C > 0) {
+
+                    switch (Line) {
+
+                        case 6: Str1 = "                 События:";  Str2 = "\0";            Number = 11; break;
+                        case 7: Str1 = "       "; Str2 = Event_A; Number = 15; break;
+                        case 8: Str1 = "       "; Str2 = Event_B; Number = 15; break;
+                        case 9: Str1 = "       "; Str2 = Event_C; Number = 15; break;
+                        default: Str1 = "\0";                           Str2 = "\0";            Number = 0;  break;
+
+                    }
+
+                    SetConsoleTextAttribute (hConsole, (WORD) ((0 << 4) | Number));
+                    cout << Str1;
+                    cout << Str2;
+                    Game.Set_BackgroundColor ();
+
+                }
+
+        } // метод отображения событий
+
+
+}; // класс логов модели
+
 class ModelProcess {
 
     public:
@@ -50,8 +119,6 @@ class ModelProcess {
         int HowWolfsMan_OnMap; // кол-во волков на карте
         int HowWolfsWoman_OnMap; // кол-во волчих на карте
         string TimeOfYear; // время года
-        int Waiting_Rabbits_Reproduction;
-        int Waiting_Wolfs_Reproduction; // задержка перед размножением видов животных
 
         ModelProcess (int Rows, int Columns) {
 
@@ -82,17 +149,8 @@ class ModelProcess {
             HowWolfsMan_OnMap = 0;
             HowWolfsWoman_OnMap = 0;
             TimeOfYear = "\0";
-            Waiting_Rabbits_Reproduction = 0;
-            Waiting_Wolfs_Reproduction = 0;
 
         }
-
-        /*void Show_Coordinates (Animals& Object) {
-
-            cout << "\nX: " << Object.X;
-            cout << "\nY: " << Object.Y;
-
-        }*/
 
         ~ModelProcess (void) {
 
@@ -172,12 +230,12 @@ class ModelProcess {
 
                 switch (Line) {
 
-                    case 1: Str1 = "               Легенда карты";  Str2 = "\0";            Number = 11; break;
-                    case 2: Str1 = "               **";             Str2 = " - Трава";      Number = 10; break;
-                    case 3: Str1 = "               &&";             Str2 = " - Заяц";       Number = 15; break;
-                    case 4: Str1 = "               &&";             Str2 = " - Зайчиха";    Number = 14; break;
-                    case 5: Str1 = "               @@";             Str2 = " - Волк";       Number = 12; break;
-                    case 6: Str1 = "               @@";             Str2 = " - Волчиха";    Number = 13; break;
+                    case 0: Str1 = "               Легенда карты";  Str2 = "\0";            Number = 11; break;
+                    case 1: Str1 = "               **";             Str2 = " - Трава";      Number = 10; break;
+                    case 2: Str1 = "               &&";             Str2 = " - Заяц";       Number = 15; break;
+                    case 3: Str1 = "               &&";             Str2 = " - Зайчиха";    Number = 14; break;
+                    case 4: Str1 = "               @@";             Str2 = " - Волк";       Number = 12; break;
+                    case 5: Str1 = "               @@";             Str2 = " - Волчиха";    Number = 13; break;
                     default: Str1 = "\0";                           Str2 = "\0";            Number = 0;  break;
 
                 }
@@ -222,7 +280,7 @@ class ModelProcess {
 
                         unsigned short int Number = 0 + rand () % 101;
 
-                            if (Number > 97)
+                            if (Number > 90)
                                 this->Field[i][c] = Grass_Block;
 
                     }
@@ -251,25 +309,6 @@ class ModelProcess {
 
                 if (Animal == "Rabbit") {
 
-                    if (Number >= 0 && Number <= 20)
-                        return 1;
-
-                    else if (Number >= 21 && Number <= 40)
-                        return 2;
-
-                    else if (Number >= 41 && Number <= 60)
-                        return 3;
-
-                    else if (Number >= 61 && Number <= 80)
-                        return 4;
-
-                    else if (Number >= 81 && Number <= 100)
-                        return 5;
-
-                } // для зайцев - от 1 до 5 особей
-
-                else if (Animal == "Wolf") {
-
                     if (Number >= 0 && Number <= 33)
                         return 1;
 
@@ -279,11 +318,60 @@ class ModelProcess {
                     else if (Number >= 67 && Number <= 100)
                         return 3;
 
+                } // для зайцев - от 1 до 5 особей
+
+                else if (Animal == "Wolf") {
+
+                    if (Number >= 0 && Number <= 50)
+                        return 1;
+
+                    else if (Number >= 51 && Number <= 100)
+                        return 2;
+
                 } // для волков - от 1 до 5 особей
 
             return 0;
 
         } // метод рандомизации кол-ва особей при рождении
+
+        int Data_Input (GameProcess& Game, string TypeDate) {
+
+            int Number = 0; // вводимое число
+            int LeftLimit = -1; // левая граница отрезка (левый предел)
+            int RightLimit = 0; // правая граница отрезка (правый предел)
+
+                if (TypeDate == "StartCount")
+                    RightLimit = 1001;
+
+                else if (TypeDate == "Coordinates")
+                    RightLimit = 10;
+
+                        while (true) {
+
+                            while (! (cin >> Number) || (cin.peek() != '\n')) {
+
+                                cin.clear();
+
+                                    while (cin.get() != '\n');
+                                        Game.Center(": ");
+
+                            }
+
+                            if (Number > LeftLimit && Number < RightLimit)
+                                break;
+
+                            else {
+
+                                Game.Center(": ");
+                                cout << "Введите значение в диапазоне от " << LeftLimit + 1 << " до " << RightLimit - 1 << ": ";
+
+                            }
+
+                        }
+
+            return Number;
+
+        } // метод для корректного ввода данных
 
 }; // класс модели
 
@@ -299,8 +387,8 @@ int Minimum_Count (int& DefaultCount, int& StartCount) {
 int main (void) {
 
     GameProcess Game;
-    ModelProcess* Model;
-    Model = new ModelProcess (Game.Rows_Count, Game.Columns_Count);
+    ModelProcess* Model = new ModelProcess (Game.Rows_Count, Game.Columns_Count);
+    ModelLogs Log;
 
     Model->Default_Settings ();
 
@@ -323,7 +411,8 @@ int main (void) {
                         if (Button == 27) {
 
                             Model->~ModelProcess();
-                            return 0;
+                            free (Model);
+                            exit (0);
 
                         }
 
@@ -338,9 +427,9 @@ int main (void) {
 
                     Button = 0;
                     Start = false;
-                    queue <int> Field_Draw;
-                    queue <int> Rabbit_Reproduction;
-                    queue <int> Wolf_Reproduction;
+                    queue <int> Field_Draw; // очередь на отрисовку поля
+                    queue <int> Rabbit_Reproduction; // очередь на размножение зайцев
+                    queue <int> Wolf_Reproduction; // очередь на размножение волков
 
                     cout.flush (); // очистка буфера в консоли
                     Game.Preview ();
@@ -369,39 +458,19 @@ int main (void) {
 
                     Game.Center ("Задайте начальные значения для размещения животных:\n\n");
                     Game.Center ("Максимальное количество зайцев в модели: ");
-
-                        while (! (cin >> Game.RabbitsCount) || (cin.peek() != '\n')) {
-
-                            cin.clear();
-
-                                while (cin.get() != '\n');
-                                    Game.Center(": ");
-
-                        }
-
+                    Game.RabbitsCount = Model->Data_Input (Game, "StartCount");
                     cout << "\n\n";
+
                     Game.Center ("Максимальное количество волков в модели: ");
-
-                        while (! (cin >> Game.WolfsCount) || (cin.peek() != '\n')) {
-
-                            cin.clear();
-
-                                while (cin.get() != '\n');
-                                    Game.Center(": ");
-
-                        }
-
+                    Game.WolfsCount = Model->Data_Input (Game, "StartCount");
                     cout << "\n\n";
-                    Game.Center ("Стартовое количество разнотипных животных на карте: ");
 
-                        while (! (cin >> Game.StartAnimalCount) || (cin.peek() != '\n')) {
+                    Game.Center ("Стартовое количество зайцев на карте: ");
+                    Game.Rabbit_StartCount = Model->Data_Input (Game, "StartCount");
+                    cout << "\n\n";
 
-                            cin.clear();
-
-                                while (cin.get() != '\n');
-                                    Game.Center(": ");
-
-                        }
+                    Game.Center ("Стартовое количество волков на карте: ");
+                    Game.Wolf_StartCount = Model->Data_Input (Game, "StartCount");
 
                     Rabbits Rabbit[Game.RabbitsCount]; // массив объектов зайцев
                     Wolfs Wolf[Game.WolfsCount]; // массив объектов волков
@@ -419,14 +488,15 @@ int main (void) {
                                         cout << Game.RabbitsCount << " зайцев и "  << Game.WolfsCount << " волков (карта " << Game.Rows_Count << "x" << Game.Columns_Count << "):\n\n";
                                         Game.Center ("Расположение зайцев:\n");
 
-                                            for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.StartAnimalCount); i++) {
+                                            for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.Rabbit_StartCount); i++) {
 
                                                 Game.Center ("");
                                                 cout << "X[" << i + 1 << "]: ";
-                                                cin >> Rabbit[i].X;
+                                                Rabbit[i].X = Model->Data_Input (Game, "Coordinates");
+
                                                 Game.Center ("");
                                                 cout << "Y[" << i + 1 << "]: ";
-                                                cin >> Rabbit[i].Y;
+                                                Rabbit[i].Y = Model->Data_Input (Game, "Coordinates");
                                                 cout << "\n";
 
                                             }
@@ -436,14 +506,15 @@ int main (void) {
 
                                         Game.Center ("Расположение волков:\n");
 
-                                            for (int i = 0; i < Minimum_Count(Game.WolfsCount, Game.StartAnimalCount); i++) {
+                                            for (int i = 0; i < Minimum_Count(Game.WolfsCount, Game.Wolf_StartCount); i++) {
 
                                                 Game.Center ("");
                                                 cout << "X[" << i + 1 << "]: ";
-                                                cin >> Wolf[i].X;
+                                                Wolf[i].X = Model->Data_Input (Game, "Coordinates");
+
                                                 Game.Center ("");
                                                 cout << "Y[" << i + 1 << "]: ";
-                                                cin >> Wolf[i].Y;
+                                                Wolf[i].Y = Model->Data_Input (Game, "Coordinates");
                                                 cout << "\n";
 
                                             }
@@ -452,14 +523,14 @@ int main (void) {
 
                                     else if (Button == 50) { // рандомное размещение животных
 
-                                        for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.StartAnimalCount); i++) {
+                                        for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.Rabbit_StartCount); i++) {
 
                                             Rabbit[i].X = 0 + rand () % 10;
                                             Rabbit[i].Y = 0 + rand () % 10;
 
                                         } // рандомизация для зайцев
 
-                                        for (int i = 0; i < Minimum_Count(Game.WolfsCount, Game.StartAnimalCount); i++) {
+                                        for (int i = 0; i < Minimum_Count(Game.WolfsCount, Game.Wolf_StartCount); i++) {
 
                                             Wolf[i].X = 0 + rand () % 10;
                                             Wolf[i].Y = 0 + rand () % 10;
@@ -468,14 +539,14 @@ int main (void) {
 
                                     } // конец рандомного размещения животных
 
-                                        for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.StartAnimalCount); i++) {
+                                        for (int i = 0; i < Minimum_Count(Game.RabbitsCount, Game.Rabbit_StartCount); i++) {
 
                                             Rabbit[i].Life = true;
                                             Rabbit[i].Sex = Model->Random_Sex ();
 
                                         } // общие стартовые значения для зайцев
 
-                                        for (int i = 0; i < Minimum_Count(Game.WolfsCount, Game.StartAnimalCount); i++) {
+                                        for (int i = 0; i < Minimum_Count(Game.WolfsCount, Game.Wolf_StartCount); i++) {
 
                                             Wolf[i].Life = true;
                                             Wolf[i].Sex = Model->Random_Sex ();
@@ -490,23 +561,10 @@ int main (void) {
 
                                         }
 
-                                    Model->Days = 0;
-                                    Model->Waiting_Rabbits_Reproduction = 0;
-                                    Model->Waiting_Wolfs_Reproduction = 0;
+                                    Model->Days = 100; // старт дней с весны
+                                    Game.Rabbit_Breeding = true;
+                                    Game.Wolf_Breeding = true;
                                     Start = true;
-
-                                }
-                    // тестирование
-                                if (Button == 55) {
-
-                                    Rabbit[0].Life = true;
-                                    Rabbit[0].Sex = false;
-                                    Rabbit[0].X = 9;
-                                    Rabbit[0].Y = 9;
-                                    Rabbit[1].Life = true;
-                                    Rabbit[1].Sex = true;
-                                    Rabbit[1].X = 9;
-                                    Rabbit[1].Y = 9;
 
                                 }
 
@@ -520,6 +578,7 @@ int main (void) {
                             cls;
                             Model->Random_Grass ();
                             Model->Field_Clear();
+                            Log.ClearEvents ();
 
                                 for (int i = 0; i < Model->N; i++) {
 
@@ -578,19 +637,17 @@ int main (void) {
 
                                                                 if (Model->Field[i][c] == Rabbit_Hare) {
 
-                                                                        if (Model->Waiting_Rabbits_Reproduction > 0)
-                                                                            Model->Waiting_Rabbits_Reproduction--;
+                                                                        if (Model->TimeOfYear != "Зима" && Rabbit[g].Food > 5 && (Rabbit[g].MaxDays > 10 && Rabbit[g].MaxDays < 2100)) { // зимой размножения не будет
 
-                                                                        else if (Model->TimeOfYear != "Зима") { // зимой размножения не будет
-
-                                                                            Model->Waiting_Rabbits_Reproduction = 3;
-
-                                                                                for (int k = 0; k < Model->Random_Reproduction("Rabbit"); k++) {
+                                                                             for (int k = 0; k < Model->Random_Reproduction("Rabbit"); k++) {
 
                                                                                     Rabbit_Reproduction.push(Rabbit[g].X);
                                                                                     Rabbit_Reproduction.push(Rabbit[g].Y);
 
                                                                                 }
+
+                                                                            Log.Event_B = "Скрещевание зайцев в ячейке [" + Int_To_String(Rabbit[g].X + 1) + "][" + Int_To_String(Rabbit[g].Y + 1) + "]";
+                                                                            Log.CountEvents_B++;
 
                                                                         }
 
@@ -698,29 +755,44 @@ int main (void) {
 
                                                 for (int g = 0; g < Game.WolfsCount; g++) {
 
-                                                        if (Wolf[g].Life == true) { // если заяц жив - существует
+                                                        if (Wolf[g].Life == true) { // если волк жив - существует
 
                                                                 if (Wolf[g].X == i && Wolf[g].Y == c) { // если координата зайца соответствует ячейке на карте
 
-                                                                    if ((Wolf[g].X == Rabbit[g].X && Wolf[g].Y == Rabbit[g].Y) && Rabbit[g].Life == true) {
+                                                                        if (Model->Field[i][c] == Rabbit_Grass || Model->Field[i][c] == Rabbit_Block || Model->Field[i][c] == Rabbit_Hare || Model->Field[i][c] == Rabbit_Rabbit) {
 
-                                                                            if (Wolf[g].Sex == true && Rabbit[g].Sex == true)
-                                                                                Model->Field[i][c] = Wolf_Rabbit;
+                                                                                if (Wolf[g].Sex == true)
+                                                                                    Model->Field[i][c] = Wolf_Rabbit;
 
-                                                                            else if (Wolf[g].Sex == true && Rabbit[g].Sex == false)
-                                                                                Model->Field[i][c] = Wolf_Hare;
+                                                                                else if (Wolf[g].Sex == false)
+                                                                                    Model->Field[i][c] = BitchWolf_Rabbit;
 
-                                                                            else if (Wolf[g].Sex == false && Rabbit[g].Sex == true)
-                                                                                Model->Field[i][c] = BitchWolf_Rabbit;
+                                                                            Rabbit[g].Life = false; // зайца съедают
+                                                                            Wolf[g].Food += 20; // волк кушает
+                                                                            Log.Event_C = "Волк съел зайца в ячейке [" + Int_To_String(Wolf[g].X + 1) + "][" + Int_To_String(Wolf[g].Y + 1) + "]";
+                                                                            Log.CountEvents_C++;
 
-                                                                            else if (Wolf[g].Sex == false && Rabbit[g].Sex == false)
-                                                                                Model->Field[i][c] = BitchWolf_Hare;
+                                                                        }
 
-                                                                        Rabbit[g].Life = false; // зайца съедают
-                                                                        Wolf[g].Food += 18; // волк кушает
-                                                                        continue;
+                                                                        else if (Model->Field[i][c] == Hare_Grass || Model->Field[i][c] == Hare_Block || Model->Field[i][c] == Hare_Hare) {
 
-                                                                    } // волк с зайцем - в одной клетке
+                                                                            if (Wolf[g].Sex == true)
+                                                                                    Model->Field[i][c] = Wolf_Hare;
+
+                                                                                else if (Wolf[g].Sex == false)
+                                                                                    Model->Field[i][c] = BitchWolf_Hare;
+
+                                                                            Rabbit[g].Life = false; // зайца съедают
+                                                                            Wolf[g].Food += 20; // волк кушает
+                                                                            Log.Event_C = "Волк съел зайца в ячейке [" + Int_To_String(Wolf[g].X + 1) + "][" + Int_To_String(Wolf[g].Y + 1) + "]";
+                                                                            Log.CountEvents_C++;
+
+
+                                                                        }
+
+                                                                     // волк с зайцем - в одной клетке
+
+                                                                if (Model->Field[i][c] != Wolf_Rabbit && Model->Field[i][c] != Wolf_Hare && Model->Field[i][c] != BitchWolf_Rabbit && Model->Field[i][c] != BitchWolf_Hare) {
 
                                                                     if (g == 0) {
 
@@ -752,123 +824,123 @@ int main (void) {
 
                                                                     } // в самой первой ячейке
 
-                                                            // случай когда заяц с зайяихой в одном блоке
+                                                            // случай когда волк с волчихой в одном блоке
 
-                                                                if (Model->Field[i][c] == Wolf_BitchWolf) {
+                                                                    if (Model->Field[i][c] == Wolf_BitchWolf) {
 
-                                                                        if (Model->Waiting_Wolfs_Reproduction > 0)
-                                                                            Model->Waiting_Wolfs_Reproduction--;
-
-                                                                        else if (Model->TimeOfYear != "Зима") { // зимой размножения не будет
-
-                                                                            Model->Waiting_Wolfs_Reproduction = 3;
+                                                                        if (Model->TimeOfYear != "Зима" && Wolf[g].Food > 15 && (Wolf[g].MaxDays > 500 && Wolf[g].MaxDays < 3600)) { // зимой размножения не будет
 
                                                                                 for (int k = 0; k < Model->Random_Reproduction("Wolf"); k++) {
 
-                                                                                    Wolf_Reproduction.push(Wolf[g].X);
-                                                                                    Wolf_Reproduction.push(Wolf[g].Y);
+                                                                                        Wolf_Reproduction.push(Wolf[g].X);
+                                                                                        Wolf_Reproduction.push(Wolf[g].Y);
 
                                                                                 }
 
-                                                                        }
-
-                                                                    continue;
-
-                                                                } // раз заяц в клетке с зайчихой, значит будут размножаться
-
-                                                                else if (Model->Field[i][c] != Wolf_BitchWolf) { // если эта клетка не занята зайцем и зайчихой
-
-                                                                    if (Wolf[g].Sex == true) { // если это заяц мужского пола
-
-                                                                        if (g == 0) { // для самой первой ячейки
-
-                                                                            if ( (Wolf[g].Sex == true && Wolf[g + 1].Sex == true) && ((Model->Field[i][c] == Wolf_Block) || (Model->Field[i][c] == Wolf_Grass) || (Model->Field[i][c] == Wolf_Wolf)) ) {
-
-                                                                                Model->Field[i][c] = Wolf_Wolf;
-                                                                                continue;
+                                                                                Log.Event_A = "Скрещевание волков в ячейке [" + Int_To_String(Wolf[g].X + 1) + "][" + Int_To_String(Wolf[g].Y + 1) + "]";
+                                                                                Log.CountEvents_A++;
 
                                                                             }
 
-                                                                        } // два зайца в одном блоке
+                                                                        continue;
 
-                                                                        else if (g > 0 && g < Game.WolfsCount - 1) { // для всех остальных
+                                                                    } // раз волк в клетке с волчихой, значит будут размножаться
 
-                                                                            if ( ((Wolf[g].Sex == true && Wolf[g + 1].Sex == true) || (Wolf[g].Sex == true && Wolf[g - 1].Sex == true)) && ((Model->Field[i][c] == Wolf_Block) || (Model->Field[i][c] == Wolf_Grass) || (Model->Field[i][c] == Wolf_Wolf)) ) {
+                                                                    else if (Model->Field[i][c] != Wolf_BitchWolf) { // если эта клетка не занята волком и волчихой
 
-                                                                                Model->Field[i][c] = Wolf_Wolf;
-                                                                                continue;
+                                                                        if (Wolf[g].Sex == true) { // если это волк мужского пола
 
-                                                                            }
+                                                                            if (g == 0) { // для самой первой ячейки
 
-                                                                        } // два зайца в одном блоке
+                                                                                if ( (Wolf[g].Sex == true && Wolf[g + 1].Sex == true) && ((Model->Field[i][c] == Wolf_Block) || (Model->Field[i][c] == Wolf_Grass) || (Model->Field[i][c] == Wolf_Wolf)) ) {
 
-                                                                        else if (g == Game.WolfsCount - 1) { // для самой последней ячейки
+                                                                                    Model->Field[i][c] = Wolf_Wolf;
+                                                                                    continue;
 
-                                                                            if ( (Wolf[g].Sex == true && Wolf[g - 1].Sex == true) && ((Model->Field[i][c] == Wolf_Block) || (Model->Field[i][c] == Wolf_Grass) || (Model->Field[i][c] == Wolf_Wolf)) ) {
+                                                                                }
 
-                                                                                Model->Field[i][c] = Wolf_Wolf;
-                                                                                continue;
+                                                                            } // два волка в одном блоке
 
-                                                                            }
+                                                                            else if (g > 0 && g < Game.WolfsCount - 1) { // для всех остальных
 
-                                                                        } // два зайца в одном блоке
+                                                                                if ( ((Wolf[g].Sex == true && Wolf[g + 1].Sex == true) || (Wolf[g].Sex == true && Wolf[g - 1].Sex == true)) && ((Model->Field[i][c] == Wolf_Block) || (Model->Field[i][c] == Wolf_Grass) || (Model->Field[i][c] == Wolf_Wolf)) ) {
 
-                                                                        if ( Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Wolf_Grass) // если в ячейке уже есть трава
-                                                                            Model->Field[i][c] = Wolf_Grass;
+                                                                                    Model->Field[i][c] = Wolf_Wolf;
+                                                                                    continue;
 
-                                                                        else if (Model->Field[i][c] != Wolf_Grass || Model->Field[i][c] == Void_Block) // если в ячейке нет травы
-                                                                            Model->Field[i][c] = Wolf_Block;
+                                                                                }
 
-                                                                    } // конец мужского пола зайцев
+                                                                            } // два волка в одном блоке
 
-                                                                    else if (Wolf[g].Sex == false) { // если это зайчиха женского пола
+                                                                            else if (g == Game.WolfsCount - 1) { // для самой последней ячейки
 
-                                                                        if (g == 0) { // для самой первой ячейки
+                                                                                if ( (Wolf[g].Sex == true && Wolf[g - 1].Sex == true) && ((Model->Field[i][c] == Wolf_Block) || (Model->Field[i][c] == Wolf_Grass) || (Model->Field[i][c] == Wolf_Wolf)) ) {
 
-                                                                            if ( (Wolf[g].Sex == false && Wolf[g + 1].Sex == false) && ((Model->Field[i][c] == BitchWolf_Block) || (Model->Field[i][c] == BitchWolf_Grass) || (Model->Field[i][c] == BitchWolf_BitchWolf)) ) {
+                                                                                    Model->Field[i][c] = Wolf_Wolf;
+                                                                                    continue;
 
-                                                                                Model->Field[i][c] = BitchWolf_BitchWolf;
-                                                                                continue;
+                                                                                }
 
-                                                                            }
+                                                                            } // два волка в одном блоке
 
-                                                                        } // две зайчихи в одном блоке
+                                                                            if ( Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Wolf_Grass) // если в ячейке уже есть трава
+                                                                                Model->Field[i][c] = Wolf_Grass;
 
-                                                                        else if (g > 0 && g < Game.WolfsCount - 1) { // для всех остальных
+                                                                            else if (Model->Field[i][c] != Wolf_Grass || Model->Field[i][c] == Void_Block) // если в ячейке нет травы
+                                                                                Model->Field[i][c] = Wolf_Block;
 
-                                                                            if ( ((Wolf[g].Sex == false && Wolf[g + 1].Sex == false) || (Wolf[g].Sex == false && Wolf[g - 1].Sex == false)) && ((Model->Field[i][c] == BitchWolf_Block) || (Model->Field[i][c] == BitchWolf_Grass) || (Model->Field[i][c] == BitchWolf_BitchWolf)) ) {
+                                                                        } // конец мужского пола волка
 
-                                                                                Model->Field[i][c] = BitchWolf_BitchWolf;
-                                                                                continue;
+                                                                        else if (Wolf[g].Sex == false) { // если это волчихи женского пола
 
-                                                                            }
+                                                                            if (g == 0) { // для самой первой ячейки
 
-                                                                        } // две зайчихи в одном блоке
+                                                                                if ( (Wolf[g].Sex == false && Wolf[g + 1].Sex == false) && ((Model->Field[i][c] == BitchWolf_Block) || (Model->Field[i][c] == BitchWolf_Grass) || (Model->Field[i][c] == BitchWolf_BitchWolf)) ) {
 
-                                                                        else if (g == Game.WolfsCount - 1) { // для самой последней ячейки
+                                                                                    Model->Field[i][c] = BitchWolf_BitchWolf;
+                                                                                    continue;
 
-                                                                            if ( (Wolf[g].Sex == false && Wolf[g - 1].Sex == false) && ((Model->Field[i][c] == BitchWolf_Block) || (Model->Field[i][c] == BitchWolf_Grass) || (Model->Field[i][c] == BitchWolf_BitchWolf)) ) {
+                                                                                }
 
-                                                                                Model->Field[i][c] = BitchWolf_BitchWolf;
-                                                                                continue;
+                                                                            } // две волчихи в одном блоке
 
-                                                                            }
+                                                                            else if (g > 0 && g < Game.WolfsCount - 1) { // для всех остальных
 
-                                                                        } // две зайчихи в одном блоке
+                                                                                if ( ((Wolf[g].Sex == false && Wolf[g + 1].Sex == false) || (Wolf[g].Sex == false && Wolf[g - 1].Sex == false)) && ((Model->Field[i][c] == BitchWolf_Block) || (Model->Field[i][c] == BitchWolf_Grass) || (Model->Field[i][c] == BitchWolf_BitchWolf)) ) {
 
-                                                                        if (Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Wolf_Grass) // если в ячейке уже есть трава
-                                                                            Model->Field[i][c] = BitchWolf_Grass;
+                                                                                    Model->Field[i][c] = BitchWolf_BitchWolf;
+                                                                                    continue;
 
-                                                                        else if (Model->Field[i][c] != Wolf_Grass || Model->Field[i][c] == Void_Block) // если в ячейке нет травы
-                                                                            Model->Field[i][c] = BitchWolf_Block;
+                                                                                }
 
-                                                                    } // конец зайчихи женского пола
+                                                                            } // две волчихи в одном блоке
 
-                                                                } // конец проверки, что заяц не находится в одной клетке с зайчихой
+                                                                            else if (g == Game.WolfsCount - 1) { // для самой последней ячейки
 
-                                                                } // конец проверки координатов зайцев с полем
+                                                                                if ( (Wolf[g].Sex == false && Wolf[g - 1].Sex == false) && ((Model->Field[i][c] == BitchWolf_Block) || (Model->Field[i][c] == BitchWolf_Grass) || (Model->Field[i][c] == BitchWolf_BitchWolf)) ) {
 
-                                                        } // конец проверки жизни зайца
+                                                                                    Model->Field[i][c] = BitchWolf_BitchWolf;
+                                                                                    continue;
+
+                                                                                }
+
+                                                                            } // две волчихи в одном блоке
+
+                                                                            if (Model->Field[i][c] == Grass_Block || Model->Field[i][c] == Wolf_Grass) // если в ячейке уже есть трава
+                                                                                Model->Field[i][c] = BitchWolf_Grass;
+
+                                                                            else if (Model->Field[i][c] != Wolf_Grass || Model->Field[i][c] == Void_Block) // если в ячейке нет травы
+                                                                                Model->Field[i][c] = BitchWolf_Block;
+
+                                                                        } // конец волчихи женского пола
+
+                                                                    } // конец проверки, что волк не находится в одной клетке с волчихой
+
+                                                                } // конец проверки, что это не блок волков с зайцем
+
+                                                            } // конец проверки координатов волков с полем
+
+                                                        } // конец проверки жизни волков
 
                                                     } // конец цикла перебора волков
 
@@ -889,6 +961,7 @@ int main (void) {
                                         }
 
                                    Model->CardLegend (Game, i);
+                                   Log.Show_Events (Game, i);
                                    cout << "\n";
 
                                         for (int k = 0; k < Model->M; k++)
@@ -922,7 +995,7 @@ int main (void) {
 
                                     }
 
-                                    else if (Rabbit[g].Life != true && !Rabbit_Reproduction.empty()) {
+                                    else if (Game.Rabbit_Breeding == true && Rabbit[g].Life != true && !Rabbit_Reproduction.empty()) {
 
                                         Rabbit[g].Life = true;
                                         Rabbit[g].Sex = Model->Random_Sex ();
@@ -953,14 +1026,14 @@ int main (void) {
                                             if (Wolf[g].MaxDays <= 0)
                                                 Wolf[g].Life = false; // смерть от старости
 
-                                        Wolf[g].Food--; // уменьшение запаса пищи в организме
+                                        Wolf[g].Food -= 1; // уменьшение запаса пищи в организме
 
                                             if (Wolf[g].Food <= 0)
                                                 Wolf[g].Life = false; // смерть от голода
 
                                     }
 
-                                    else if (Wolf[g].Life != true && !Wolf_Reproduction.empty()) {
+                                    else if (Game.Wolf_Breeding == true && Wolf[g].Life != true && !Wolf_Reproduction.empty()) {
 
                                         Wolf[g].Life = true;
                                         Wolf[g].Sex = Model->Random_Sex ();
@@ -968,7 +1041,7 @@ int main (void) {
                                         Wolf_Reproduction.pop ();
                                         Wolf[g].Y = Wolf_Reproduction.front ();
                                         Wolf_Reproduction.pop ();
-                                        Wolf[g].Food = 100;
+                                        Wolf[g].Food = 50;
                                         Wolf[g].MaxDays = 3700;
 
                                     }
@@ -977,19 +1050,29 @@ int main (void) {
 
                             Model->Days += 10;
                             Model->Determine_TimeOfYear ();
-                            cout << "\nПрошло дней: " << Model->Days << setw (10) << "          Время года: " << Model->TimeOfYear << "\n\n";
+                            cout << "\nПрошло дней: " << Model->Days - 100 << setw (10) << "           Время года: " << Model->TimeOfYear << "\n\n";
                             cout << "Количество зайцев: " << Model->HowRabbitsMan_OnMap << setw (10) << "      Количество волков: " << Model->HowWolfsMan_OnMap << "\n\n";
                             cout << "Количество зайчих: " << Model->HowRabbitsWoman_OnMap << setw (10) << "      Количество волчих: " << Model->HowWolfsWoman_OnMap << "\n\n";
                             cout << "Количество блоков с травой: " << Model->CountGrass;
 
-                                if (Model->HowRabbitsMan_OnMap == 0 && Model->HowRabbitsWoman_OnMap == 0)
-                                    cout << "      | Зайцы умерли, волки победили!";
-
-                                else if (Model->HowWolfsMan_OnMap == 0 && Model->HowWolfsWoman_OnMap == 0)
-                                    cout << "      | Волки умерли, зайцы победили!";
-
-                                else if (Model->HowRabbitsMan_OnMap == 0 && Model->HowRabbitsWoman_OnMap == 0 && Model->HowWolfsMan_OnMap == 0 && Model->HowWolfsWoman_OnMap == 0)
+                                if (Model->HowRabbitsMan_OnMap == 0 && Model->HowRabbitsWoman_OnMap == 0 && Model->HowWolfsMan_OnMap == 0 && Model->HowWolfsWoman_OnMap == 0)
                                     cout << "      | Ничья, погибли все!";
+
+                                else {
+
+                                    if (Model->HowRabbitsMan_OnMap == 0 && Model->HowRabbitsWoman_OnMap == 0)
+                                        cout << "      | Зайцы умерли, волки победили!";
+
+                                    else if (Model->HowWolfsMan_OnMap == 0 && Model->HowWolfsWoman_OnMap == 0)
+                                        cout << "      | Волки умерли, зайцы победили!";
+
+                                }
+
+                                if (Game.Rabbit_Breeding == true && (Model->HowRabbitsMan_OnMap == 0 || Model->HowRabbitsWoman_OnMap == 0))
+                                    Game.Rabbit_Breeding = false;
+
+                                if (Game.Wolf_Breeding == true && (Model->HowWolfsMan_OnMap == 0 || Model->HowWolfsWoman_OnMap == 0))
+                                    Game.Wolf_Breeding = false;
 
                                 while (true) {
 

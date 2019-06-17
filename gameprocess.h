@@ -32,7 +32,11 @@ class GameProcess {
         int WolfsCount; // максимальное кол-во волков
         unsigned short int Rows_Count; // кол-во строк в матрице поля
         unsigned short int Columns_Count; // кол-во столбцов в матрице поля
-        int StartAnimalCount; // стартовое число животных (для обоих видов)
+        int Rabbit_StartCount;
+        int Wolf_StartCount;
+        bool Rabbit_Breeding; // возможность размножаться у зайцев (наличие на карте минимум 1 зайца и 1 зайчихи)
+        bool Wolf_Breeding; // возможность размножаться у волков (наличие на карте минимум 1 волка и 1 волчихи)
+        // стартовое число животных (для обоих видов)
 
         GameProcess (void) {
 
@@ -41,7 +45,10 @@ class GameProcess {
             WolfsCount = 0;
             Rows_Count = 10;
             Columns_Count = 10;
-            StartAnimalCount = 0;
+            Rabbit_StartCount = 0;
+            Wolf_StartCount = 0;
+            Rabbit_Breeding = true;
+            Wolf_Breeding = true;
 
         }
 
@@ -79,7 +86,7 @@ class GameProcess {
             Center("YMoiY;  MMM  MMM0 YMMM  Z0M; 0MMM  Yv7  i;MMMi iz  MQ YMMMMMMMM@MMMI1  6$MMMiiC. CMMMMMMMMMMMM  tYt  v2MMM6 .cvv  MMM, BMM@ .MMM  MMt;,8MMM  9BM: MM\n");
             Center("vM     .MMM  MMMZ cMMM  MMM; QMMM         MMM;     Mb YMMMMMMMMMMMMMM :MMMMM     1MMMMMMMM@MMM       MMMMMU       MMMi $MM# .MMM  MMM9 YMMM  MMM: MM\n");
             Center("CMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n");
-            Center(".#bQEQQZISAZbUoAoQ261UbbIo2AEUo22Qb$bB0WEbUoI9QQ0Q86U0IUnznSz1onzooI2EU61ISUbQQE0AIoSznItUCI1AbQQQWE0Uo21A2WbB0QE8UoIAbAo22EUA169EUo2AEA2z2E9AnAI0bB\n\n\n\n");
+            Center("   .#bQEQQZISAZbUoAoQ261UbbIo2AEUo22Qb$bB0WEbUoI9QQ0Q86U0IUnznSz1onzooI2EU61ISUbQQE0AIoSznItUCI1AbQQQWE0Uo21A2WbB0QE8UoIAbAo22EUA169EUo2AEA2z2E9AnAI0bB\n\n\n\n");
 
         } // метод отрисовки шапки
 
