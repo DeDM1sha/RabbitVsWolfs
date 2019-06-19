@@ -6,6 +6,7 @@
 #include <queue>
 #include <iomanip>
 #include <sstream>
+#include <fstream>
 
 #define Void_Block 100
 #define Grass_Block 101
@@ -44,65 +45,6 @@ string Int_To_String (int Number) {
     return NumToString.str();
 
 } // функция перевода из int в string
-
-class ModelLogs {
-
-    public:
-
-        string Event_A; // первое событие - скрещивание волков
-        string Event_B; // второе событие - скрещивание зайцев
-        string Event_C; // третье событие - поедание волком зайца
-        int CountEvents_A; // кол-во первых событий
-        int CountEvents_B; // кол-во вторых событий
-        int CountEvents_C; // кол-во третих событий
-
-        ModelLogs (void) {
-
-        	ClearEvents ();
-
-        }
-
-        ~ModelLogs (void) {}
-
-        void ClearEvents (void) {
-
-        	Event_A = "\0";
-        	Event_B = "\0";
-        	Event_C = "\0";
-        	CountEvents_A = 0;
-        	CountEvents_B = 0;
-        	CountEvents_C = 0;
-
-        } // очистка значений
-
-        void Show_Events (GameProcess& Game, int Line) {
-
-            unsigned short int Number = 0;
-            string Str1 = "\0", Str2 = "\0";
-
-                if (CountEvents_A > 0 || CountEvents_B > 0 || CountEvents_C > 0) {
-
-                    switch (Line) {
-
-                        case 6: Str1 = "                 События:";  Str2 = "\0";            Number = 11; break;
-                        case 7: Str1 = "       "; Str2 = Event_A; Number = 15; break;
-                        case 8: Str1 = "       "; Str2 = Event_B; Number = 15; break;
-                        case 9: Str1 = "       "; Str2 = Event_C; Number = 15; break;
-                        default: Str1 = "\0";                           Str2 = "\0";            Number = 0;  break;
-
-                    }
-
-                    SetConsoleTextAttribute (hConsole, (WORD) ((0 << 4) | Number));
-                    cout << Str1;
-                    cout << Str2;
-                    Game.Set_BackgroundColor ();
-
-                }
-
-        } // метод отображения событий
-
-
-}; // класс логов модели
 
 class ModelProcess {
 
@@ -374,6 +316,93 @@ class ModelProcess {
         } // метод для корректного ввода данных
 
 }; // класс модели
+
+class ModelLogs {
+
+    public:
+
+        string Event_A; // первое событие - скрещивание волков
+        string Event_B; // второе событие - скрещивание зайцев
+        string Event_C; // третье событие - поедание волком зайца
+        int CountEvents_A; // кол-во первых событий
+        int CountEvents_B; // кол-во вторых событий
+        int CountEvents_C; // кол-во третих событий
+
+        ModelLogs (void) {
+
+        	ClearEvents ();
+
+        	ofstream Write_CountRabbits ("Rabbits.txt");
+        	Write_CountRabbits << "\0";
+        	Write_CountRabbits.close ();
+
+        	ofstream Write_CountWolfs ("Wolfs.txt");
+        	Write_CountWolfs << "\0";
+        	Write_CountWolfs.close ();
+
+        	ofstream Write_CountGrass ("Grass.txt");
+        	Write_CountGrass << "\0";
+        	Write_CountGrass.close ();
+
+        }
+
+        ~ModelLogs (void) {}
+
+        void ClearEvents (void) {
+
+        	Event_A = "\0";
+        	Event_B = "\0";
+        	Event_C = "\0";
+        	CountEvents_A = 0;
+        	CountEvents_B = 0;
+        	CountEvents_C = 0;
+
+        } // очистка значений
+
+        void Show_Events (GameProcess& Game, int Line) {
+
+            unsigned short int Number = 0;
+            string Str1 = "\0", Str2 = "\0";
+
+                if (CountEvents_A > 0 || CountEvents_B > 0 || CountEvents_C > 0) {
+
+                    switch (Line) {
+
+                        case 6: Str1 = "                 События:";  Str2 = "\0";            Number = 11; break;
+                        case 7: Str1 = "       "; Str2 = Event_A; Number = 15; break;
+                        case 8: Str1 = "       "; Str2 = Event_B; Number = 15; break;
+                        case 9: Str1 = "       "; Str2 = Event_C; Number = 15; break;
+                        default: Str1 = "\0";                           Str2 = "\0";            Number = 0;  break;
+
+                    }
+
+                    SetConsoleTextAttribute (hConsole, (WORD) ((0 << 4) | Number));
+                    cout << Str1;
+                    cout << Str2;
+                    Game.Set_BackgroundColor ();
+
+                }
+
+        } // метод отображения событий
+
+        void Save_Logs_Output (ModelProcess& Model) {
+
+            ofstream Write_CountRabbits ("Rabbits.txt", ios::app);
+        	Write_CountRabbits << Model.HowRabbitsMan_OnMap + Model.HowRabbitsWoman_OnMap << "\n";
+        	Write_CountRabbits.close ();
+
+        	ofstream Write_CountWolfs ("Wolfs.txt", ios::app);
+        	Write_CountWolfs << Model.HowWolfsMan_OnMap + Model.HowWolfsWoman_OnMap << "\n";;
+        	Write_CountWolfs.close ();
+
+        	ofstream Write_CountGrass ("Grass.txt", ios::app);
+        	Write_CountGrass << Model.CountGrass << "\n";
+        	Write_CountGrass.close ();
+
+        } // сохранение данных модели во внешний файл
+
+
+}; // класс логов модели
 
 int Minimum_Count (int& DefaultCount, int& StartCount) {
 
@@ -759,7 +788,7 @@ int main (void) {
 
                                                                 if (Wolf[g].X == i && Wolf[g].Y == c) { // если координата зайца соответствует ячейке на карте
 
-                                                                        if (Model->Field[i][c] == Rabbit_Grass || Model->Field[i][c] == Rabbit_Block || Model->Field[i][c] == Rabbit_Hare || Model->Field[i][c] == Rabbit_Rabbit) {
+                                                                        if ((Model->Field[i][c] == Rabbit_Grass || Model->Field[i][c] == Rabbit_Block || Model->Field[i][c] == Rabbit_Hare || Model->Field[i][c] == Rabbit_Rabbit) && (Wolf[g].X == Rabbit[g].X && Wolf[g].Y == Rabbit[g].Y)) {
 
                                                                                 if (Wolf[g].Sex == true)
                                                                                     Model->Field[i][c] = Wolf_Rabbit;
@@ -774,7 +803,7 @@ int main (void) {
 
                                                                         }
 
-                                                                        else if (Model->Field[i][c] == Hare_Grass || Model->Field[i][c] == Hare_Block || Model->Field[i][c] == Hare_Hare) {
+                                                                        else if ((Model->Field[i][c] == Hare_Grass || Model->Field[i][c] == Hare_Block || Model->Field[i][c] == Hare_Hare) && (Wolf[g].X == Rabbit[g].X && Wolf[g].Y == Rabbit[g].Y)) {
 
                                                                             if (Wolf[g].Sex == true)
                                                                                     Model->Field[i][c] = Wolf_Hare;
@@ -1021,6 +1050,8 @@ int main (void) {
                                                 Model->HowWolfsWoman_OnMap++;
 
                                         Wolf[g].Move();
+                                        Wolf[g].Move();
+                                        Wolf[g].Move();
                                         Wolf[g].MaxDays -= 10;
 
                                             if (Wolf[g].MaxDays <= 0)
@@ -1047,6 +1078,8 @@ int main (void) {
                                     }
 
                                 } // повторный проход по всем волкам, для произведения вычислений
+
+                            Log.Save_Logs_Output (*Model);
 
                             Model->Days += 10;
                             Model->Determine_TimeOfYear ();
